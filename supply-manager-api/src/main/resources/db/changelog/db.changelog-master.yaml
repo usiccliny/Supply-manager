@@ -1,3 +1,6 @@
 databaseChangeLog:
   - include:
+      - file: /db/changelog/system-function/system-function-changelog.yaml
+  - include:
       - file: /db/changelog/table/table-changelog.yaml
+
