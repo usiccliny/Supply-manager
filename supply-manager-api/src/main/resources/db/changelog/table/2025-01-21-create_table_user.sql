@@ -38,7 +38,7 @@ comment on column supply_manager.user.version_id is 'Идентификатор 
 comment on column supply_manager.user.username is 'Имя пользователя';
 comment on column supply_manager.user.password is 'Пароль пользователя';
 comment on column supply_manager.user.email is 'Адрес электронной почты';
-comment on column supply_manager.user.role_id is 'Роль пользователя';
-comment on column supply_manager.user.role_id is 'Признак устаревшей записи';
+comment on column supply_manager.user.role_id is 'Идентификатор роли';
+comment on column supply_manager.user.obsolete is 'Признак устаревшей записи';
 comment on column supply_manager.user.begin_ts is 'Дата начала действия записи';
 comment on column supply_manager.user.end_ts is 'Дата окончания действия записи';
