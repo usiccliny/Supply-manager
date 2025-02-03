@@ -3,3 +3,5 @@ databaseChangeLog:
       - file: /db/changelog/table/2025-01-21-create_table_sp_role.sql
   - include:
       - file: /db/changelog/table/2025-01-21-create_table_user.sql
+  - include:
+      - file: /db/changelog/table/2025-02-03-create_table_company.sql
