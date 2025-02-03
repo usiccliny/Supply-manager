@@ -1,80 +1,111 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom'; // Импортируем useNavigate
+import axios from 'axios'; // Импортируем axios
 
 const RegisterContainer = styled.div`
   max-width: 400px;
-  margin: 50px auto; /* Центрируем по горизонтали и вертикали */
-  padding: 40px; /* Увеличенные внутренние отступы */
+  margin: 50px auto;
+  padding: 40px;
   border-radius: 10px;
-  background: #f9f9f9; /* Светло-серый фон для формы */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Легкая тень для эффекта приподнятости */
+  background: #f9f9f9;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
-
   &:hover {
-    transform: translateY(-5px); /* Плавный подъем при наведении на форму */
+    transform: translateY(-5px);
   }
 `;
 
 const Title = styled.h1`
   text-align: center;
-  color: #333; /* Темный цвет текста */
-  font-size: 26px; /* Увеличенный размер шрифта */
-  margin-bottom: 30px; /* Отступ снизу */
+  color: #333;
+  font-size: 26px;
+  margin-bottom: 30px;
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 15px; /* Отступ между элементами */
+  margin-bottom: 15px;
 `;
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 5px; /* Отступ снизу от метки */
-  font-weight: 500; /* Полужирный текст для меток */
-  color: #555; /* Темный цвет меток */
-  font-size: 14px; /* Размер шрифта для меток */
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+  font-size: 14px;
 `;
 
 const Input = styled.input`
-  width: 100%; /* Полное расширение */
-  padding: 12px; /* Внутренние отступы */
-  border: 1px solid #ddd; /* Светло-серая рамка */
-  border-radius: 5px; /* Закругленные углы */
-  font-size: 16px; /* Размер шрифта для полей ввода */
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
   transition: border-color 0.3s, background 0.3s;
-
   &:focus {
-    outline: none; /* Убираем стандартный контур */
-    border-color: #007bff; /* Синяя рамка при фокусе */
-    background: #fff; /* Белый фон при фокусе */
+    outline: none;
+    border-color: #007bff;
+    background: #fff;
   }
 `;
 
 const Button = styled.button`
   width: 100%;
-  padding: 10px; /* Увеличенные внутренние отступы кнопки */
-  background-color: #007bff; /* Синяя кнопка */
-  color: white; /* Белый текст на кнопке */
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 5px; /* Закругленные углы */
-  font-size: 18px; /* Размер шрифта для кнопки */
+  border-radius: 5px;
+  font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s;
-
   &:hover {
-    background-color: #0056b3; /* Более светлый цвет при наведении */
+    background-color: #0056b3;
   }
+`;
+
+const ErrorMessage = styled.p`
+  color: red; /* Красный текст для ошибок */
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const SuccessMessage = styled.p`
+  color: green; /* Зелёный текст для успешных сообщений */
+  text-align: center;
+  margin-top: 10px;
 `;
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState(''); // Для отображения сообщений
+  const navigate = useNavigate(); // Создаем экземпляр navigate
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Предотвращаем перезагрузку страницы
-    console.log('Имя пользователя:', username);
-    console.log('Пароль:', password);
-    console.log('Электронная почта:', email);
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/auth/register', {
+        username,
+        password,
+        email,
+      });
+
+      setMessage(response.data); // Отображаем успешное сообщение
+
+      setUsername('');
+      setPassword('');
+      setEmail('');
+
+      // Переходим на главную страницу после успешной регистрации
+      if (response.data === 'User registered successfully') {
+        navigate('/'); // Замените '/' на нужный вам маршрут
+      }
+    } catch (error) {
+      setMessage(error.response?.data || 'Registration failed'); // Отображаем ошибку
+    }
   };
 
   return (
@@ -113,6 +144,15 @@ const Register = () => {
         </FormGroup>
         <Button type="submit">Зарегистрироваться</Button>
       </form>
+      {message && (
+        <>
+          {message === 'User registered successfully' ? (
+            <SuccessMessage>{message}</SuccessMessage>
+          ) : (
+            <ErrorMessage>{message}</ErrorMessage>
+          )}
+        </>
+      )}
     </RegisterContainer>
   );
 };

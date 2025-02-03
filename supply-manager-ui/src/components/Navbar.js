@@ -47,7 +47,7 @@ const NavItem = styled(Link)`
   }
 `;
 
-const DropdownMenu = styled.div`
+const DropdownMenu = styled(({ isOpen, ...props }) => <div {...props} />)`
   position: absolute;
   top: 0; 
   left: 0; 
@@ -71,7 +71,7 @@ const DropdownItem = styled(Link)`
   }
 `;
 
-const Overlay = styled.div`
+const Overlay = styled(({ isOpen, ...props }) => <div {...props} />)`
   position: fixed; 
   top: 0;
   left: 0;
