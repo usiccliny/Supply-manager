@@ -25,6 +25,7 @@ create table if not exists supply_manager.company(
   lifetime int,
   rating numeric,
   compyany_code text not null,
+  logotype text,
   obsolete bool not null default false,
   begin_ts timestamp not null default current_timestamp,
   end_ts timestamp not null default supply_manager.f_max_timestamp(),

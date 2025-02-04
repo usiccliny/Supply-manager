@@ -22,6 +22,7 @@ declare
   p_lifetime supply_manager.company.lifetime%type;
   p_rating supply_manager.company.rating%type;
   p_compyany_code supply_manager.company.compyany_code%type;
+  p_logotype supply_manager.company.p_logotype%type;
   p_obsolete bool;
 begin
     if new.id is null then
@@ -35,6 +36,7 @@ begin
              , lifetime
              , rating
              , compyany_code
+             , logotype
              , obsolete
           into new.id
              , p_version_id
@@ -46,6 +48,7 @@ begin
              , p_lifetime
              , p_rating
              , p_compyany_code
+             , p_logotype
              , p_obsolete
           from supply_manager.company
          where new.compyany_code = compyany_code
@@ -55,8 +58,8 @@ begin
         p_date := now()::date; -- дата добавления записи
         
         -- Проверяем является ли вставляемая строка полным дубликатом существующей
-        if ( md5(row(new.name, new.email, new.address, new.website, new.lifetime, new.rating, new.compyany_code)::text)
-           = md5(row(p_name, p_email, p_address, p_website, p_lifetime, p_rating, p_compyany_code)::text) )
+        if ( md5(row(new.name, new.email, new.address, new.website, new.lifetime, new.rating, new.compyany_code, new.logotype)::text)
+           = md5(row(p_name, p_email, p_address, p_website, p_lifetime, p_rating, p_compyany_code, p_logotype)::text) )
         then
             -- Если все значения равны, не вставляем строку
             return null;
