@@ -76,65 +76,82 @@ const SuccessMessage = styled.p`
 `;
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', {
-        username,
-        password,
-      });
+        try {
+            const response = await axios.post('http://localhost:8080/api/auth/login', {
+                username,
+                password,
+            });
 
-      const token = response.data; // Получаем JWT-токен
-      localStorage.setItem('token', token); // Сохраняем токен в localStorage
-      setMessage('Login successful');
-      console.log('Token saved:', token);
-    } catch (error) {
-      setMessage(error.response?.data || 'Login failed');
-    }
-  };
+            const token = response.data; // Получаем JWT-токен
+            localStorage.setItem('token', token); // Сохраняем токен в localStorage
+            setLoggedIn(true); // Устанавливаем состояние входа
+            setMessage('Login successful');
+            console.log('Token saved:', token);
+        } catch (error) {
+            setMessage(error.response?.data || 'Login failed');
+        }
+    };
 
-  return (
-    <LoginContainer>
-      <Title>Вход</Title>
-      <form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label htmlFor="username">Имя пользователя</Label>
-          <Input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="password">Пароль</Label>
-          <Input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </FormGroup>
-        <Button type="submit">Войти</Button>
-      </form>
-      {message && (
-        <>
-          {message === 'Login successful' ? (
-            <SuccessMessage>{message}</SuccessMessage>
-          ) : (
-            <ErrorMessage>{message}</ErrorMessage>
-          )}
-        </>
-      )}
-    </LoginContainer>
-  );
+    const handleLogout = () => {
+        setLoggedIn(false); // Устанавливаем состояние выхода
+        setUsername('');
+        setPassword('');
+    };
+
+    return (
+        <div>
+            {isLoggedIn ? (
+                <div>
+                    <h1>Добро пожаловать, {username}!</h1>
+                    <button onClick={handleLogout}>Выйти</button>
+                </div>
+            ) : (
+                <LoginContainer>
+                    <Title>Вход</Title>
+                    <form onSubmit={handleSubmit}>
+                        <FormGroup>
+                            <Label htmlFor="username">Имя пользователя</Label>
+                            <Input
+                                type="text"
+                                id="username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label htmlFor="password">Пароль</Label>
+                            <Input
+                               type="password"
+                               id="password"
+                               value={password}
+                               onChange={(e) => setPassword(e.target.value)}
+                               required
+                            />
+                        </FormGroup>
+                        <Button type="submit">Войти</Button>
+                    </form>
+                    {message && (
+                        <>
+                            {message === 'Login successful' ? (
+                                <SuccessMessage>{message}</SuccessMessage>
+                            ) : (
+                                <ErrorMessage>{message}</ErrorMessage>
+                            )}
+                        </>
+                    )}
+                </LoginContainer>
+            )}
+        </div>
+    );
 };
 
 export default LoginForm;

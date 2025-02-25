@@ -22,7 +22,7 @@ declare
   p_lifetime supply_manager.company.lifetime%type;
   p_rating supply_manager.company.rating%type;
   p_compyany_code supply_manager.company.compyany_code%type;
-  p_logotype supply_manager.company.p_logotype%type;
+  p_logotype supply_manager.company.logotype%type;
   p_obsolete bool;
 begin
     if new.id is null then
@@ -41,7 +41,6 @@ begin
           into new.id
              , p_version_id
              , p_name
-             , p_password
              , p_email
              , p_address
              , p_website
