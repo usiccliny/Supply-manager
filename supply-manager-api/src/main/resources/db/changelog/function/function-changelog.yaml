@@ -3,3 +3,11 @@ databaseChangeLog:
       - file: /db/changelog/function/2025-02-02-create_function_f_user_id_insert.sql
   - include:
       - file: /db/changelog/function/2025-02-02-create_function_f_company_id_insert.sql
+  - include:
+      - file: /db/changelog/function/2025-02-25-create_function_f_order_id_insert.sql
+  - include:
+      - file: /db/changelog/function/2025-02-25-create_function_f_product_id_insert.sql
+  - include:
+      - file: /db/changelog/function/2025-02-25-create_function_f_supplier_id_insert.sql
+  - include:
+      - file: /db/changelog/function/2025-02-26-create_function_f_order_detail_id_insert.sql

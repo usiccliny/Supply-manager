@@ -21,7 +21,7 @@ declare
   p_website supply_manager.company.website%type;
   p_lifetime supply_manager.company.lifetime%type;
   p_rating supply_manager.company.rating%type;
-  p_compyany_code supply_manager.company.compyany_code%type;
+  p_company_code supply_manager.company.company_code%type;
   p_logotype supply_manager.company.logotype%type;
   p_obsolete bool;
 begin
@@ -35,7 +35,7 @@ begin
              , website
              , lifetime
              , rating
-             , compyany_code
+             , company_code
              , logotype
              , obsolete
           into new.id
@@ -46,19 +46,19 @@ begin
              , p_website
              , p_lifetime
              , p_rating
-             , p_compyany_code
+             , p_company_code
              , p_logotype
              , p_obsolete
           from supply_manager.company
-         where new.compyany_code = compyany_code
+         where new.company_code = company_code
          order by end_ts desc
          limit 1;
 
         p_date := now()::date; -- дата добавления записи
         
         -- Проверяем является ли вставляемая строка полным дубликатом существующей
-        if ( md5(row(new.name, new.email, new.address, new.website, new.lifetime, new.rating, new.compyany_code, new.logotype)::text)
-           = md5(row(p_name, p_email, p_address, p_website, p_lifetime, p_rating, p_compyany_code, p_logotype)::text) )
+        if ( md5(row(new.name, new.email, new.address, new.website, new.lifetime, new.rating, new.company_code, new.logotype)::text)
+           = md5(row(p_name, p_email, p_address, p_website, p_lifetime, p_rating, p_company_code, p_logotype)::text) )
         then
             -- Если все значения равны, не вставляем строку
             return null;

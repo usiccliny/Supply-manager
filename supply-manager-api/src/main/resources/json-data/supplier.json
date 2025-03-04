@@ -1,0 +1,182 @@
+[
+    {
+        "contact_person": "Иванов Иван",
+        "phone_number": "+7 911 123-45-67",
+        "email": "ivanov@alphatechnologies.ru",
+        "address": "Москва, ул. Альфа, д. 10",
+        "company_id": 1,
+        "company_vers_id": 1,
+        "post_id": 1
+    },
+    {
+        "contact_person": "Петров Петр",
+        "phone_number": "+7 911 234-56-78",
+        "email": "petrov@betagroup.ru",
+        "address": "Санкт-Петербург, пр. Бета, 1А",
+        "company_id": 2,
+        "company_vers_id": 2,
+        "post_id": 2
+    },
+    {
+        "contact_person": "Сидорова Светлана",
+        "phone_number": "+7 911 345-67-89",
+        "email": "sidorova@gammainnovations.ru",
+        "address": "Екатеринбург, ул. Гамма, д. 5",
+        "company_id": 3,
+        "company_vers_id": 3,
+        "post_id": 3
+    },
+    {
+        "contact_person": "Лисичка Алексей",
+        "phone_number": "+7 911 456-78-90",
+        "email": "lisichka@deltaengineering.ru",
+        "address": "Казань, ул. Дельта, д. 15",
+        "company_id": 4,
+        "company_vers_id": 4,
+        "post_id": 4
+    },
+    {
+        "contact_person": "Кузнецова Ольга",
+        "phone_number": "+7 911 567-89-01",
+        "email": "kuznetsova@epsilonsystems.ru",
+        "address": "Новосибирск, пер. Епсилон, д. 3",
+        "company_id": 5,
+        "company_vers_id": 5,
+        "post_id": 5
+    },
+    {
+        "contact_person": "Смирнов Анатолий",
+        "phone_number": "+7 911 678-90-12",
+        "email": "smirnov@zetaholding.ru",
+        "address": "Нижний Новгород, ул. Зета, д. 12",
+        "company_id": 6,
+        "company_vers_id": 6,
+        "post_id": 6
+    },
+    {
+        "contact_person": "Федорова Анна",
+        "phone_number": "+7 911 789-01-23",
+        "email": "fedorova@etacorp.ru",
+        "address": "Омск, ул. Эта, д. 28",
+        "company_id": 7,
+        "company_vers_id": 7,
+        "post_id": 7
+    },
+    {
+        "contact_person": "Громов Никита",
+        "phone_number": "+7 911 890-12-34",
+        "email": "gromov@theta.ru",
+        "address": "Уфа, ул. Тета, д. 7",
+        "company_id": 8,
+        "company_vers_id": 8,
+        "post_id": 8
+    },
+    {
+        "contact_person": "Ковалев Сергей",
+        "phone_number": "+7 911 901-23-45",
+        "email": "kovalev@promtechservice.ru",
+        "address": "Ростов-на-Дону, ул. Промысловая, д. 32",
+        "company_id": 9,
+        "company_vers_id": 1,
+        "post_id": 9
+    },
+    {
+        "contact_person": "Лебедев Ирина",
+        "phone_number": "+7 911 012-34-56",
+        "email": "lebedev@techfuture.ru",
+        "address": "Москва, пр. Инноваций, д. 50",
+        "company_id": 10,
+        "company_vers_id": 2,
+        "post_id": 10
+    },
+    {
+        "contact_person": "Климова Дина",
+        "phone_number": "+7 911 123-45-67",
+        "email": "klimova@sibles.ru",
+        "address": "Красноярск, ул. Сибирская, д. 15",
+        "company_id": 11,
+        "company_vers_id": 3,
+        "post_id": 11
+    },
+    {
+        "contact_person": "Сидоров Константин",
+        "phone_number": "+7 911 234-56-78",
+        "email": "sidorov@cosmosgroup.ru",
+        "address": "Владивосток, ул. Космическая, д. 404",
+        "company_id": 12,
+        "company_vers_id": 4,
+        "post_id": 12
+    },
+    {
+        "contact_person": "Емельянов Владислав",
+        "phone_number": "+7 911 345-67-89",
+        "email": "emelyanov@greenplanet.ru",
+        "address": "Нижний Тагил, ул. Экологическая, д. 8",
+        "company_id": 13,
+        "company_vers_id": 5,
+        "post_id": 13
+    },
+    {
+        "contact_person": "Антонов Виталий",
+        "phone_number": "+7 911 456-78-90",
+        "email": "antonov@stroyinvest.ru",
+        "address": "Симферополь, ул. Строителей, д. 34",
+        "company_id": 14,
+        "company_vers_id": 6,
+        "post_id": 14
+    },
+    {
+        "contact_person": "Королев Дмитрий",
+        "phone_number": "+7 911 567-89-01",
+        "email": "korolev@uralmash.ru",
+        "address": "Екатеринбург, ул. Машиностроителей, д. 10",
+        "company_id": 15,
+        "company_vers_id": 7,
+        "post_id": 15
+    },
+    {
+        "contact_person": "Исаев Роман",
+        "phone_number": "+7 911 678-90-12",
+        "email": "isaev@technologistics.ru",
+        "address": "Санкт-Петербург, ул. Логистическая, д. 23",
+        "company_id": 16,
+        "company_vers_id": 8,
+        "post_id": 16
+    },
+    {
+        "contact_person": "Фролов Станислав",
+        "phone_number": "+7 911 789-01-23",
+        "email": "frolov@agrosouz.ru",
+        "address": "Тула, пр. Сельский, д. 45",
+        "company_id": 17,
+        "company_vers_id": 9,
+        "post_id": 17
+    },
+    {
+        "contact_person": "Щепкина Ксения",
+        "phone_number": "+7 911 890-12-34",
+        "email": "shchepkina@culinaryempire.ru",
+        "address": "Казань, ул. Вкусная, д. 7А",
+        "company_id": 18,
+        "company_vers_id": 10,
+        "post_id": 18
+    },
+    {
+        "contact_person": "Никитина Лилия",
+        "phone_number": "+7 911 901-23-45",
+        "email": "nikitina@artgroup.ru",
+        "address": "Москва, ул. Артек, д. 1",
+        "company_id": 19,
+        "company_vers_id": 11,
+        "post_id": 19
+    },
+    {
+        "contact_person": "Соболев Артем",
+        "phone_number": "+7 911 012-34-56",
+        "email": "sobolev@svetlograd.ru",
+        "address": "Новороссийск, ул. Светлая, д. 12",
+        "company_id": 20,
+        "company_vers_id": 12,
+        "post_id": 20
+    }
+]

@@ -4,6 +4,20 @@ databaseChangeLog:
   - include:
       - file: /db/changelog/table/2025-02-04-create_table_sp_post.sql
   - include:
+      - file: /db/changelog/table/2025-02-25-create_table_sp_category_product.sql
+  - include:
+      - file: /db/changelog/table/2025-02-26-create_table_sp_payment_method.sql
+  - include:
+      - file: /db/changelog/table/2025-02-26-create_table_sp_order_status.sql
+  - include:
       - file: /db/changelog/table/2025-01-21-create_table_user.sql
   - include:
       - file: /db/changelog/table/2025-02-03-create_table_company.sql
+  - include:
+      - file: /db/changelog/table/2025-02-25-create_table_supplier.sql
+  - include:
+      - file: /db/changelog/table/2025-02-25-create_table_product.sql
+  - include:
+      - file: /db/changelog/table/2025-02-25-create_table_order.sql
+  - include:
+      - file: /db/changelog/table/2025-02-26-create_table_order_detail.sql

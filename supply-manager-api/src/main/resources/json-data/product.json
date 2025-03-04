@@ -1,0 +1,542 @@
+[
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 4,
+        "status": "Доступен",
+        "price": 15000.00,
+        "quantity": 100,
+        "description": "Смартфон премиум класса"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 4,
+        "status": "Доступен",
+        "price": 20000.00,
+        "quantity": 50,
+        "description": "Смартфон с водонепроницаемым корпусом"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 4,
+        "status": "Доступен",
+        "price": 45000.00,
+        "quantity": 20,
+        "description": "Ноутбук с высокой производительностью"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 4,
+        "status": "Недоступен",
+        "price": 30000.00,
+        "quantity": 0,
+        "description": "Планшет с высокой разрешающей способностью"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 4,
+        "status": "Доступен",
+        "price": 25000.00,
+        "quantity": 10,
+        "description": "Хорошее качество звука для музыки"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 4,
+        "status": "Доступен",
+        "price": 12000.00,
+        "quantity": 200,
+        "description": "Компактная Bluetooth колонка"
+    },
+    {
+        "company_id": 6,
+        "company_version_id": 6,
+        "category_product_id": 4,
+        "status": "Доступен",
+        "price": 5000.00,
+        "quantity": 500,
+        "description": "Наушники с шумоподавлением"
+    },
+    {
+        "company_id": 7,
+        "company_version_id": 7,
+        "category_product_id": 4,
+        "status": "Доступен",
+        "price": 6000.00,
+        "quantity": 300,
+        "description": "Смарт-часы для фитнеса"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 5,
+        "status": "Доступен",
+        "price": 8000.00,
+        "quantity": 250,
+        "description": "Беспроводное зарядное устройство"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 5,
+        "status": "Доступен",
+        "price": 15000.00,
+        "quantity": 150,
+        "description": "Проектор для дома"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 5,
+        "status": "Недоступен",
+        "price": 22000.00,
+        "quantity": 0,
+        "description": "Игровая консоль нового поколения"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 6,
+        "status": "Доступен",
+        "price": 9000.00,
+        "quantity": 100,
+        "description": "Электрическая зубная щетка"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 6,
+        "status": "Доступен",
+        "price": 500.00,
+        "quantity": 600,
+        "description": "Умный термометр"
+    },
+    {
+        "company_id": 6,
+        "company_version_id": 6,
+        "category_product_id": 6,
+        "status": "Доступен",
+        "price": 1200.00,
+        "quantity": 350,
+        "description": "Фитнес-браслет"
+    },
+    {
+        "company_id": 7,
+        "company_version_id": 7,
+        "category_product_id": 6,
+        "status": "Доступен",
+        "price": 25000.00,
+        "quantity": 80,
+        "description": "Кофемашина с капучинатором"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 7,
+        "status": "Доступен",
+        "price": 5000.00,
+        "quantity": 90,
+        "description": "Холодильник"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 7,
+        "status": "Недоступен",
+        "price": 3000.00,
+        "quantity": 0,
+        "description": "Микроволновая печь"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 7,
+        "status": "Доступен",
+        "price": 10000.00,
+        "quantity": 150,
+        "description": "Плита индукционная"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 7,
+        "status": "Доступен",
+        "price": 7500.00,
+        "quantity": 60,
+        "description": "Смарт-йогуртница"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 7,
+        "status": "Доступен",
+        "price": 2000.00,
+        "quantity": 250,
+        "description": "Электрическая чайник"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 8,
+        "status": "Доступен",
+        "price": 1000.00,
+        "quantity": 400,
+        "description": "Крем для лица"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 8,
+        "status": "Доступен",
+        "price": 300.00,
+        "quantity": 1000,
+        "description": "Тоник для лица"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 8,
+        "status": "Доступен",
+        "price": 500.00,
+        "quantity": 800,
+        "description": "Маска для лица"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 8,
+        "status": "Доступен",
+        "price": 700.00,
+        "quantity": 750,
+        "description": "Шампунь"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 8,
+        "status": "Доступен",
+        "price": 900.00,
+        "quantity": 620,
+        "description": "Кондиционер"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 9,
+        "status": "Доступен",
+        "price": 150.00,
+        "quantity": 1500,
+        "description": "Шариковая ручка"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 9,
+        "status": "Доступен",
+        "price": 350.00,
+        "quantity": 900,
+        "description": "Блокнот"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 9,
+        "status": "Доступен",
+        "price": 200.00,
+        "quantity": 1200,
+        "description": "Маркер"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 9,
+        "status": "Доступен",
+        "price": 400.00,
+        "quantity": 800,
+        "description": "Фломастер"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 10,
+        "status": "Доступен",
+        "price": 500.00,
+        "quantity": 300,
+        "description": "Бумага для принтера"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 10,
+        "status": "Доступен",
+        "price": 800.00,
+        "quantity": 200,
+        "description": "Папка для документов"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 10,
+        "status": "Доступен",
+        "price": 600.00,
+        "quantity": 400,
+        "description": "Пенал"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 10,
+        "status": "Доступен",
+        "price": 300.00,
+        "quantity": 1000,
+        "description": "Клей"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 10,
+        "status": "Доступен",
+        "price": 150.00,
+        "quantity": 1500,
+        "description": "Ножницы"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 11,
+        "status": "Доступен",
+        "price": 2500.00,
+        "quantity": 60,
+        "description": "Велосипед"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 11,
+        "status": "Доступен",
+        "price": 1200.00,
+        "quantity": 100,
+        "description": "Коврик для йоги"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 11,
+        "status": "Доступен",
+        "price": 3200.00,
+        "quantity": 75,
+        "description": "Гладильная доска"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 11,
+        "status": "Доступен",
+        "price": 2800.00,
+        "quantity": 90,
+        "description": "Спиннер"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 11,
+        "status": "Доступен",
+        "price": 1800.00,
+        "quantity": 120,
+        "description": "Скакалка"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 12,
+        "status": "Доступен",
+        "price": 3000.00,
+        "quantity": 360,
+        "description": "Автоподбор"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 12,
+        "status": "Доступен",
+        "price": 8500.00,
+        "quantity": 80,
+        "description": "Масло моторное"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 12,
+        "status": "Доступен",
+        "price": 7000.00,
+        "quantity": 45,
+        "description": "Тормозные колодки"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 12,
+        "status": "Доступен",
+        "price": 15000.00,
+        "quantity": 20,
+        "description": "Блок управления"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 12,
+        "status": "Доступен",
+        "price": 6000.00,
+        "quantity": 15,
+        "description": "Фара"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 13,
+        "status": "Доступен",
+        "price": 500.00,
+        "quantity": 500,
+        "description": "Детская игрушка"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 13,
+        "status": "Доступен",
+        "price": 1500.00,
+        "quantity": 250,
+        "description": "Конструктор"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 13,
+        "status": "Доступен",
+        "price": 1200.00,
+        "quantity": 300,
+        "description": "Кукла"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 13,
+        "status": "Доступен",
+        "price": 2000.00,
+        "quantity": 100,
+        "description": "Машинка"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 13,
+        "status": "Доступен",
+        "price": 1800.00,
+        "quantity": 80,
+        "description": "Плюшевая игрушка"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 14,
+        "status": "Доступен",
+        "price": 5000.00,
+        "quantity": 60,
+        "description": "Умный дом"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 14,
+        "status": "Доступен",
+        "price": 3000.00,
+        "quantity": 90,
+        "description": "Мультиварка"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 14,
+        "status": "Доступен",
+        "price": 7000.00,
+        "quantity": 40,
+        "description": "Холодильник"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 14,
+        "status": "Доступен",
+        "price": 20000.00,
+        "quantity": 15,
+        "description": "Стиральная машина"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 14,
+        "status": "Доступен",
+        "price": 25000.00,
+        "quantity": 100,
+        "description": "Посудомоечная машина"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 15,
+        "status": "Доступен",
+        "price": 18000.00,
+        "quantity": 30,
+        "description": "Увлажнитель воздуха"
+    },
+    {
+        "company_id": 2,
+        "company_version_id": 2,
+        "category_product_id": 15,
+        "status": "Доступен",
+        "price": 500.00,
+        "quantity": 150,
+        "description": "Сухофрукты"
+    },
+    {
+        "company_id": 3,
+        "company_version_id": 3,
+        "category_product_id": 15,
+        "status": "Доступен",
+        "price": 1000.00,
+        "quantity": 200,
+        "description": "Кофе"
+    },
+    {
+        "company_id": 4,
+        "company_version_id": 4,
+        "category_product_id": 15,
+        "status": "Доступен",
+        "price": 800.00,
+        "quantity": 300,
+        "description": "Чай"
+    },
+    {
+        "company_id": 5,
+        "company_version_id": 5,
+        "category_product_id": 15,
+        "status": "Доступен",
+        "price": 700.00,
+        "quantity": 400,
+        "description": "Закуски"
+    },
+    {
+        "company_id": 1,
+        "company_version_id": 1,
+        "category_product_id": 15,
+        "status": "Доступен",
+        "price": 300.00,
+        "quantity": 500,
+        "description": "Конфеты"
+    }
+    ;

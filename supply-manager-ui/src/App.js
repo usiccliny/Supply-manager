@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
@@ -9,6 +9,15 @@ import Profile from './components/Profile';
 import Register from './components/Register';
 
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setLoggedIn(true);
+    }
+  }, []);
+
   return (
     <Router>
       <Navbar />
@@ -17,7 +26,7 @@ const App = () => {
         <Route path="/orders" element={<OrderList />} />
         <Route path="/suppliers" element={<SupplierList />} />
         <Route path="/reports" element={<Report />} />
-        <Route path="/profile" element={<Profile/>} />
+        <Route path="/profile" element={<Profile loggedIn={loggedIn} />} />
         <Route path="/register" element={<Register/>} />
       </Routes>
     </Router>

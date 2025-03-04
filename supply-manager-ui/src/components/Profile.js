@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -80,6 +80,19 @@ const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [userId, setUserId] = useState('');
+
+    // Проверяем наличие токена в localStorage при загрузке компонента
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const savedUsername = localStorage.getItem('username'); // Сохраняем также имя пользователя
+        const userId = localStorage.getItem('userId');
+        if (token) {
+            setLoggedIn(true);
+            setUsername(savedUsername); 
+            setUserId(userId);
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -90,8 +103,10 @@ const LoginForm = () => {
                 password,
             });
 
-            const token = response.data; // Получаем JWT-токен
+            const { token, userId } = response.data; // Получаем JWT-токен
             localStorage.setItem('token', token); // Сохраняем токен в localStorage
+            localStorage.setItem('userId', userId); // Сохраняем ID пользователя
+            localStorage.setItem('username', username); // Сохраняем имя пользователя
             setLoggedIn(true); // Устанавливаем состояние входа
             setMessage('Login successful');
             console.log('Token saved:', token);
@@ -101,6 +116,9 @@ const LoginForm = () => {
     };
 
     const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('username'); // Удаляем имя пользователя
         setLoggedIn(false); // Устанавливаем состояние выхода
         setUsername('');
         setPassword('');

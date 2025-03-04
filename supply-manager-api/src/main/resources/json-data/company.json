@@ -1,0 +1,552 @@
+[
+    {
+        "name": "Альфа Технолоджис",
+        "email": "contact@alphatechnologies.ru",
+        "address": "ул. Альфа, д. 10, Москва, 123456",
+        "website": "https://www.alphatechnologies.ru",
+        "lifetime": 15,
+        "rating": 4.8,
+        "compyany_code": "ALPHA_TECH",
+        "logotype": null
+    },
+    {
+        "name": "Бета Групп",
+        "email": "info@betagroup.ru",
+        "address": "пр. Бета, 1А, Санкт-Петербург, 654321",
+        "website": "https://www.betagroup.ru",
+        "lifetime": 10,
+        "rating": 4.2,
+        "compyany_code": "BETA_GROUP",
+        "logotype": null
+    },
+    {
+        "name": "Гамма Инновации",
+        "email": "support@gammainnovations.ru",
+        "address": "ул. Гамма, д. 5, Екатеринбург, 456789",
+        "website": "https://www.gammainnovations.ru",
+        "lifetime": 20,
+        "rating": 4.5,
+        "compyany_code": "GAMMA_INN",
+        "logotype": null
+    },
+    {
+        "name": "Дельта Инжиниринг",
+        "email": "contact@deltaengineering.ru",
+        "address": "ул. Дельта, д. 15, Казань, 123987",
+        "website": "https://www.deltaengineering.ru",
+        "lifetime": 25,
+        "rating": 3.9,
+        "compyany_code": "DELTA_ENG",
+        "logotype": null
+    },
+    {
+        "name": "Епсилон Системс",
+        "email": "info@epsilonsystems.ru",
+        "address": "пер. Епсилон, д. 3, Новосибирск, 789456",
+        "website": "https://www.epsilonsystems.ru",
+        "lifetime": 5,
+        "rating": 4.1,
+        "compyany_code": "EPSILON_SYS",
+        "logotype": null
+    },
+    {
+        "name": "Зета Холдинг",
+        "email": "support@zetaholding.ru",
+        "address": "ул. Зета, д. 12, Нижний Новгород, 654789",
+        "website": "https://www.zetaholding.ru",
+        "lifetime": 12,
+        "rating": 4.0,
+        "compyany_code": "ZETA_HOLD",
+        "logotype": null
+    },
+    {
+        "name": "Эта Корпорация",
+        "email": "contact@etacorp.ru",
+        "address": "ул. Эта, д. 28, Омск, 321654",
+        "website": "https://www.etacorp.ru",
+        "lifetime": 3,
+        "rating": 2.9,
+        "compyany_code": "ETA_CORP",
+        "logotype": null
+    },
+    {
+        "name": "Тета Партners",
+        "email": "info@theta.ru",
+        "address": "ул. Тета, д. 7, Уфа, 987654",
+        "website": "https://www.theta.ru",
+        "lifetime": 8,
+        "rating": 4.3,
+        "compyany_code": "THETA_PART",
+        "logotype": null
+    },
+    {
+        "name": "Иота Решения",
+        "email": "support@iotasolutions.ru",
+        "address": "ул. Иота, д. 22, Челябинск, 321987",
+        "website": "https://www.iotasolutions.ru",
+        "lifetime": 6,
+        "rating": 3.8,
+        "compyany_code": "IOTA_SOL",
+        "logotype": null
+    },
+    {
+        "name": "Каппа Взаимодействие",
+        "email": "contact@kappacollaboration.ru",
+        "address": "ул. Каппа, д. 14, Волгоград, 159753",
+        "website": "https://www.kappacollaboration.ru",
+        "lifetime": 11,
+        "rating": 4.6,
+        "compyany_code": "KAPPA_COLLAB",
+        "logotype": null
+    },
+    {
+        "name": "ПромТех Сервис",
+        "email": "info@promtechservice.ru",
+        "address": "ул. Промысловая, д. 32, Ростов-на-Дону, 344000",
+        "website": "https://www.promtechservice.ru",
+        "lifetime": 18,
+        "rating": 4.5,
+        "compyany_code": "PROM_TECH",
+        "logotype": null
+    },
+    {
+        "name": "Технология Будущего",
+        "email": "contact@techfuture.ru",
+        "address": "пр. Инноваций, д. 50, Москва, 101000",
+        "website": "https://www.techfuture.ru",
+        "lifetime": 7,
+        "rating": 4.1,
+        "compyany_code": "TECH_FUTURE",
+        "logotype": null
+    },
+    {
+        "name": "Сибирский Лес",
+        "email": "support@SibLes.ru",
+        "address": "ул. Сибирская, д. 15, Красноярск, 660000",
+        "website": "https://www.sibles.ru",
+        "lifetime": 30,
+        "rating": 4.7,
+        "compyany_code": "SIB_LES",
+        "logotype": null
+    },
+    {
+        "name": "Космос Групп",
+        "email": "info@cosmosgroup.ru",
+        "address": "ул. Космическая, д. 404, Владивосток, 690000",
+        "website": "https://www.cosmosgroup.ru",
+        "lifetime": 12,
+        "rating": 3.8,
+        "compyany_code": "COSMOS_GRP",
+        "logotype": null
+    },
+    {
+        "name": "Зеленая Планета",
+        "email": "contact@greenplanet.ru",
+        "address": "ул. Экологическая, д. 8, Нижний Тагил, 622000",
+        "website": "https://www.greenplanet.ru",
+        "lifetime": 10,
+        "rating": 4.3,
+        "compyany_code": "GREEN_PLAN",
+        "logotype": null
+    },
+    {
+        "name": "СтройИнвест",
+        "email": "info@stroyinvest.ru",
+        "address": "ул. Строителей, д. 34, Симферополь, 295000",
+        "website": "https://www.stroyinvest.ru",
+        "lifetime": 15,
+        "rating": 4.6,
+        "compyany_code": "STROY_INV",
+        "logotype": null
+    },
+    {
+        "name": "Уралмаш",
+        "email": "support@uralmash.ru",
+        "address": "ул. Машиностроителей, д. 10, Екатеринбург, 620000",
+        "website": "https://www.uralmash.ru",
+        "lifetime": 20,
+        "rating": 4.0,
+        "compyany_code": "URAL_MASH",
+        "logotype": null
+    },
+    {
+        "name": "ТехноЛогистика",
+        "email": "info@technologistics.ru",
+        "address": "ул. Логистическая, д. 23, Санкт-Петербург, 190000",
+        "website": "https://www.technologistics.ru",
+        "lifetime": 5,
+        "rating": 3.9,
+        "compyany_code": "TECH_LOG",
+        "logotype": null
+    },
+    {
+        "name": "Агросоюз",
+        "email": "contact@agrosouz.ru",
+        "address": "пр. Сельский, д. 45, Тула, 300000",
+        "website": "https://www.agrosouz.ru",
+        "lifetime": 8,
+        "rating": 4.2,
+        "compyany_code": "AGRO_SOYUZ",
+        "logotype": null
+    },
+    {
+        "name": "Империя Кулинарии",
+        "email": "info@culinaryempire.ru",
+        "address": "ул. Вкусная, д. 7А, Казань, 420000",
+        "website": "https://www.culinaryempire.ru",
+        "lifetime": 3,
+        "rating": 3.5,
+        "compyany_code": "CULINARY_EMP",
+        "logotype": null
+    },
+    {
+        "name": "Арт Групп",
+        "email": "contact@artgroup.ru",
+        "address": "ул. Артек, д. 1, Москва, 123456",
+        "website": "https://www.artgroup.ru",
+        "lifetime": 8,
+        "rating": 4.5,
+        "compyany_code": "ART_GRP",
+        "logotype": null
+    },
+    {
+        "name": "Светлоград",
+        "email": "info@svetlograd.ru",
+        "address": "ул. Светлая, д. 12, Новороссийск, 353900",
+        "website": "https://www.svetlograd.ru",
+        "lifetime": 15,
+        "rating": 4.0,
+        "compyany_code": "SVETLOGRAD",
+        "logotype": null
+    },
+    {
+        "name": "Металлургия Севера",
+        "email": "support@metallurgiya-severa.ru",
+        "address": "ул. Металлургов, д. 56, Архангельск, 163000",
+        "website": "https://www.metallurgiya-severa.ru",
+        "lifetime": 20,
+        "rating": 4.3,
+        "compyany_code": "MET_SEVER",
+        "logotype": null
+    },
+    {
+        "name": "Ритейл Онлайн",
+        "email": "contact@retail-online.ru",
+        "address": "пр. Коммерческий, д. 78, Самара, 443000",
+        "website": "https://www.retail-online.ru",
+        "lifetime": 4,
+        "rating": 3.8,
+        "compyany_code": "RETAIL_ONLINE",
+        "logotype": null
+    },
+    {
+        "name": "Логистика 21",
+        "email": "info@logistika21.ru",
+        "address": "ул. Логистическая, д. 18, Омск, 644000",
+        "website": "https://www.logistika21.ru",
+        "lifetime": 3,
+        "rating": 4.1,
+        "compyany_code": "LOGIST_21",
+        "logotype": null
+    },
+    {
+        "name": "Строительная Компания",
+        "email": "support@stroyka.ru",
+        "address": "ул. Строителей, д. 10, Казань, 420000",
+        "website": "https://www.stroyka.ru",
+        "lifetime": 10,
+        "rating": 4.4,
+        "compyany_code": "STROY_COMP",
+        "logotype": null
+    },
+    {
+        "name": "Финансовая Группа",
+        "email": "contact@fin_group.ru",
+        "address": "ул. Финансовая, д. 20, Санкт-Петербург, 190000",
+        "website": "https://www.fin_group.ru",
+        "lifetime": 15,
+        "rating": 3.9,
+        "compyany_code": "FIN_GRUP",
+        "logotype": null
+    },
+    {
+        "name": "Санаторий Здоровье",
+        "email": "info@sanatoriy-zdorovie.ru",
+        "address": "ул. Курортная, д. 5, Анапа, 353440",
+        "website": "https://www.sanatoriy-zdorovie.ru",
+        "lifetime": 25,
+        "rating": 4.7,
+        "compyany_code": "SANO_ZDRAV",
+        "logotype": null
+    },
+    {
+        "name": "IT Инновации",
+        "email": "support@itinnovations.ru",
+        "address": "ул. Технологий, д. 11, Челябинск, 454000",
+        "website": "https://www.itinnovations.ru",
+        "lifetime": 6,
+        "rating": 4.2,
+        "compyany_code": "IT_INNOV",
+        "logotype": null
+    },
+    {
+        "name": "Новая Энергия",
+        "email": "contact@newenergy.ru",
+        "address": "ул. Энергетиков, д. 9, Тольятти, 445000",
+        "website": "https://www.newenergy.ru",
+        "lifetime": 14,
+        "rating": 4.6,
+        "compyany_code": "NEW_ENERGY",
+        "logotype": null
+    },
+    {
+        "name": "Светоч",
+        "email": "info@svetochnost.ru",
+        "address": "ул. Светлая, д. 45, Ростов-на-Дону, 344000",
+        "website": "https://www.svetoch.ru",
+        "lifetime": 12,
+        "rating": 4.1,
+        "compyany_code": "SVETOCH",
+        "logotype": null
+    },
+    {
+        "name": "Кулинарные Традиции",
+        "email": "support@kulinartrad.ru",
+        "address": "ул. Кулинарная, д. 25, Екатеринбург, 620000",
+        "website": "https://www.kulinartrad.ru",
+        "lifetime": 8,
+        "rating": 4.5,
+        "compyany_code": "KUL_TRAD",
+        "logotype": null
+    },
+    {
+        "name": "Архитектурные Решения",
+        "email": "contact@arhsolutions.ru",
+        "address": "ул. Архитектора, д. 32, Новосибирск, 630000",
+        "website": "https://www.arhsolutions.ru",
+        "lifetime": 9,
+        "rating": 3.7,
+        "compyany_code": "ARH_SOL",
+        "logotype": null
+    },
+    {
+        "name": "Здоровое Питание",
+        "email": "info@zdoroviepita.ru",
+        "address": "ул. Здоровья, д. 14, Тюмень, 625000",
+        "website": "https://www.zdoroviepita.ru",
+        "lifetime": 5,
+        "rating": 4.2,
+        "compyany_code": "ZPITA",
+        "logotype": null
+    },
+    {
+        "name": "ЭкоФинанс",
+        "email": "support@ecofinance.ru",
+        "address": "ул. Эко, д. 3, Воронеж, 394000",
+        "website": "https://www.ecofinance.ru",
+        "lifetime": 7,
+        "rating": 4.0,
+        "compyany_code": "ECO_FIN",
+        "logotype": null
+    },
+    {
+        "name": "ПромМаш",
+        "email": "contact@prommash.ru",
+        "address": "ул. Машиностроения, д. 50, Иваново, 153000",
+        "website": "https://www.prommash.ru",
+        "lifetime": 10,
+        "rating": 4.3,
+        "compyany_code": "PROM_MASH",
+        "logotype": null
+    },
+    {
+        "name": "Космическая Оборона",
+        "email": "info@cosmdefense.ru",
+        "address": "ул. Космонавтов, д. 16, Калуга, 248000",
+        "website": "https://www.cosmdefense.ru",
+        "lifetime": 15,
+        "rating": 4.4,
+        "compyany_code": "COS_DEF",
+        "logotype": null
+    },
+    {
+        "name": "ЛидерВосток",
+        "email": "support@lider-vostok.ru",
+        "address": "ул. Восточная, д. 29, Хабаровск, 680000",
+        "website": "https://www.lider-vostok.ru",
+        "lifetime": 3,
+        "rating": 3.6,
+        "compyany_code": "LIDER_VOSTOK",
+        "logotype": null
+    },
+    {
+        "name": "Стратегия 2020",
+        "email": "contact@strategy2020.ru",
+        "address": "пр. Будущего, д. 8, Сочи, 354000",
+        "website": "https://www.strategy2020.ru",
+        "lifetime": 6,
+        "rating": 4.2,
+        "compyany_code": "STRATEGY20",
+        "logotype": null
+    },
+    {
+        "name": "Умные Технологии",
+        "email": "info@smarttech.ru",
+        "address": "ул. Умная, д. 77, Ярославль, 150000",
+        "website": "https://www.smarttech.ru",
+        "lifetime": 4,
+        "rating": 4.5,
+        "compyany_code": "SMART_TEC",
+        "logotype": null
+    },
+    {
+        "name": "Лесная Продукция",
+        "email": "support@lesproduct.ru",
+        "address": "ул. Лесная, д. 12, Кострома, 156000",
+        "website": "https://www.lesproduct.ru",
+        "lifetime": 10,
+        "rating": 3.9,
+        "compyany_code": "LES_PROD",
+        "logotype": null
+    },
+    {
+        "name": "Современные Решения",
+        "email": "contact@modern-solutions.ru",
+        "address": "ул. Современная, д. 35, Архангельск, 163000",
+        "website": "https://www.modern-solutions.ru",
+        "lifetime": 5,
+        "rating": 4.0,
+        "compyany_code": "MOD_SOL",
+        "logotype": null
+    },
+    {
+        "name": "МедТех",
+        "email": "info@medtech.ru",
+        "address": "ул. Медицины, д. 9, Кемерово, 650000",
+        "website": "https://www.medtech.ru",
+        "lifetime": 7,
+        "rating": 4.3,
+        "compyany_code": "MED_TECH",
+        "logotype": null
+    },
+    {
+        "name": "Восточные Грезы",
+        "email": "support@vostdreams.ru",
+        "address": "ул. Восточная, д. 21, Владивосток, 690000",
+        "website": "https://www.vostdreams.ru",
+        "lifetime": 3,
+        "rating": 3.8,
+        "compyany_code": "VOST_GREZ",
+        "logotype": null
+    },
+    {
+        "name": "Инновация XXI века",
+        "email": "contact@innov21.ru",
+        "address": "ул. Новой Эры, д. 15, Казань, 420000",
+        "website": "https://www.innov21.ru",
+        "lifetime": 8,
+        "rating": 4.6,
+        "compyany_code": "INN_21",
+        "logotype": null
+    },
+    {
+        "name": "АгроФирма",
+        "email": "info@agrofirma.ru",
+        "address": "ул. Сельская, д. 2, Батайск, 346880",
+        "website": "https://www.agrofirma.ru",
+        "lifetime": 12,
+        "rating": 4.1,
+        "compyany_code": "AGRO_FIRM",
+        "logotype": null
+    },
+    {
+        "name": "Позитивные Изменения",
+        "email": "support@positivechanges.ru",
+        "address": "ул. Изменений, д. 31, Нижний Новгород, 603000",
+        "website": "https://www.positivechanges.ru",
+        "lifetime": 4,
+        "rating": 3.5,
+        "compyany_code": "POSITIVE_CH",
+        "logotype": null
+    },
+    {
+        "name": "Забота о Потребителе",
+        "email": "contact@consumer-care.ru",
+        "address": "ул. Удобства, д. 88, Брянск, 241000",
+        "website": "https://www.consumer-care.ru",
+        "lifetime": 30,
+        "rating": 4.8,
+        "compyany_code": "CONSUMER_CARE",
+        "logotype": null
+    },
+    {
+        "name": "Динамика",
+        "email": "info@dynamics.ru",
+        "address": "ул. Динамичная, д. 4, Екатеринбург, 620000",
+        "website": "https://www.dynamics.ru",
+        "lifetime": 8,
+        "rating": 4.0,
+        "compyany_code": "DYNAMICS",
+        "logotype": null
+    },
+    {
+        "name": "Гармония",
+        "email": "support@harmony.ru",
+        "address": "ул. Гармонии, д. 120, Екатеринбург, 620000",
+        "website": "https://www.harmony.ru",
+        "lifetime": 6,
+        "rating": 4.2,
+        "compyany_code": "HARMONY",
+        "logotype": null
+    },
+    {
+        "name": "IT Solutions",
+        "email": "contact@itsolutions.ru",
+        "address": "ул. Инноваций, д. 30, Челябинск, 454000",
+        "website": "https://www.itsolutions.ru",
+        "lifetime": 10,
+        "rating": 4.5,
+        "compyany_code": "IT_SOLUTIONS",
+        "logotype": null
+    },
+    {
+        "name": "Экологическая Инновация",
+        "email": "info@ecoinnovations.ru",
+        "address": "ул. Экологическая, д. 45, Тюмень, 625000",
+        "website": "https://www.ecoinnovations.ru",
+        "lifetime": 5,
+        "rating": 3.8,
+        "compyany_code": "ECO_INNOV",
+        "logotype": null
+    },
+    {
+        "name": "Тепло и Оборудование",
+        "email": "support@heatandequipment.ru",
+        "address": "ул. Теплоснабжения, д. 22, Сызрань, 446000",
+        "website": "https://www.heatandequipment.ru",
+        "lifetime": 8,
+        "rating": 4.1,
+        "compyany_code": "HEAT_EQ",
+        "logotype": null
+    },
+    {
+        "name": "СпецТехника",
+        "email": "contact@spetstech.ru",
+        "address": "ул. Спецтехническая, д. 90, Саранск, 430000",
+        "website": "https://www.spetstech.ru",
+        "lifetime": 12,
+        "rating": 4.4,
+        "compyany_code": "SPETS_TECH",
+        "logotype": null
+    },
+    {
+        "name": "Модные Технологии",
+        "email": "info@fashiontech.ru",
+        "address": "ул. Модная, д. 102, Курск, 305000",
+        "website": "https://www.fashiontech.ru",
+        "lifetime": 10,
+        "rating": 4.3,
+        "compyany_code": "FASHION_TECH",
+        "logotype": null
+    }
+]

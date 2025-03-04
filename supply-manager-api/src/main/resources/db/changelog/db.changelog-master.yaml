@@ -5,4 +5,5 @@ databaseChangeLog:
       - file: /db/changelog/table/table-changelog.yaml
   - include:
       - file: /db/changelog/function/function-changelog.yaml
-
+  - include:
+      - file: /db/changelog/view/view-changelog.yaml

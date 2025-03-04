@@ -1,0 +1,44 @@
+[
+    {
+        "user_id": 7,
+        "user_version_id": 7,
+        "order_date": "2025-03-01T10:00:00",
+        "total_amount": 150.75,
+        "shipping_address": "Улица Толстого, дом 12, Москва",
+        "billing_address": "Улица Крылатская, дом 15, Москва",
+        "payment_method_id": 1,
+        "order_status_id": 1,
+        "tracking_number": "TRACK001",
+        "date_created": "2025-03-01T10:00:00",
+        "date_modified": "2025-03-01T10:00:00",
+        "notes": "Первый заказ, в процессе обработки"
+    },
+    {
+        "user_id": 7,
+        "user_version_id": 7,
+        "order_date": "2025-03-02T14:30:00",
+        "total_amount": 250.00,
+        "shipping_address": "Улица Кутузовская, дом 5, Санкт-Петербург",
+        "billing_address": "Улица Невского, дом 10, Санкт-Петербург",
+        "payment_method_id": 2,
+        "order_status_id": 2,
+        "tracking_number": "TRACK002",
+        "date_created": "2025-03-02T14:30:00",
+        "date_modified": "2025-03-02T14:30:00",
+        "notes": "Второй заказ, успешно оплачен"
+    },
+    {
+        "user_id": 7,
+        "user_version_id": 7,
+        "order_date": "2025-03-03T09:45:00",
+        "total_amount": 100.50,
+        "shipping_address": "Улица Ленина, дом 3, Екатеринбург",
+        "billing_address": "Улица Советов, дом 20, Екатеринбург",
+        "payment_method_id": 3,
+        "order_status_id": 5,
+        "tracking_number": "TRACK003",
+        "date_created": "2025-03-03T09:45:00",
+        "date_modified": "2025-03-03T09:45:00",
+        "notes": "Третий заказ, отменен по запросу клиента"
+    }
+]

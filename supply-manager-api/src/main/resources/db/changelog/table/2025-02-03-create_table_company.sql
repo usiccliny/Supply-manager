@@ -24,7 +24,7 @@ create table if not exists supply_manager.company(
   website text,
   lifetime int,
   rating numeric,
-  compyany_code text not null,
+  company_code text not null,
   logotype text,
   obsolete bool not null default false,
   begin_ts timestamp not null default current_timestamp,
@@ -43,7 +43,7 @@ comment on column supply_manager.company.address is 'Физический адр
 comment on column supply_manager.company.website is 'Адрес вебсайта';
 comment on column supply_manager.company.lifetime is 'Продолжительность работы компании';
 comment on column supply_manager.company.rating is 'Ретийнг компании';
-comment on column supply_manager.company.compyany_code is 'Уникальный код компании';
+comment on column supply_manager.company.company_code is 'Уникальный код компании';
 comment on column supply_manager.company.obsolete is 'Признак устаревшей записи';
 comment on column supply_manager.company.begin_ts is 'Дата начала действия записи';
 comment on column supply_manager.company.end_ts is 'Дата окончания действия записи';

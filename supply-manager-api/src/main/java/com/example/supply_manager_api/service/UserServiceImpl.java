@@ -1,6 +1,7 @@
 package com.example.supply_manager_api.service;
 
 import com.example.supply_manager_api.config.JwtUtils;
+import com.example.supply_manager_api.dto.AuthResponse;
 import com.example.supply_manager_api.dto.LoginDto;
 import com.example.supply_manager_api.dto.UserDto;
 import com.example.supply_manager_api.model.User;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String authenticateUser(LoginDto loginDto) {
+    public AuthResponse authenticateUser(LoginDto loginDto) {
         User user = userRepository.findByUsername(loginDto.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -43,6 +44,9 @@ public class UserServiceImpl implements UserService {
         }
 
         // Генерируем JWT-токен
-        return jwtUtils.generateToken(user.getUsername());
+        String token = jwtUtils.generateToken(user.getUsername());
+
+        // Возвращаем объект AuthResponse с токеном и userId
+        return new AuthResponse(token, user.getId());
     }
 }
