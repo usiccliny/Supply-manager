@@ -18,6 +18,8 @@ create table if not exists supply_manager.sp_category_product(
  */
   id int8 not null default nextval('supply_manager.sp_role_id_seq'::regclass),
   name text not null,
+  parent_id int8 null,
+  nesting_level int8 null,
   created_at timestamp not null default current_timestamp,
   obsolete bool not null default false,
   constraint pk_sp_category_product primary key (id),
@@ -27,5 +29,7 @@ comment on table supply_manager.sp_category_product is 'Таблица Кате�
 
 comment on column supply_manager.sp_category_product.id is 'Идентификатор категории';
 comment on column supply_manager.sp_category_product.name is 'Наименование категории';
+comment on column supply_manager.sp_category_product.parent_id is 'Идентификатор родительской категории';
+comment on column supply_manager.sp_category_product.nesting_level is 'Уровень вложенности';
 comment on column supply_manager.sp_category_product.created_at is 'Дата создания категории';
 comment on column supply_manager.sp_category_product.obsolete is 'Признак устаревшей записи';

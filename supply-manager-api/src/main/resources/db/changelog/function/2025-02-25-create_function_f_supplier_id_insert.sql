@@ -20,20 +20,21 @@ declare
   p_email supply_manager.supplier.email%type;
   p_address supply_manager.supplier.address%type;
   p_company_id supply_manager.supplier.company_id%type;
-  p_company_vers_id supply_manager.supplier.company_vers_id%type;
+  p_company_version_id supply_manager.supplier.company_version_id%type;
   p_post_id supply_manager.supplier.post_id%type;
   p_obsolete bool;
 begin
     if new.supplier_id is null then
         -- Проверяем, есть ли такая же запись в таблице
         select supplier_id, supplier_version_id, contact_person, phone_number,
-               email, address, company_id, company_vers_id, post_id, obsolete
+               email, address, company_id, company_version_id, post_id, obsolete
           into new.supplier_id, p_version_id, p_contact_person, 
-               p_phone_number, p_email, p_address, p_company_id, p_company_vers_id,
+               p_phone_number, p_email, p_address, p_company_id, p_company_version_id,
                p_post_id, p_obsolete
           from supply_manager.supplier
-         where new.company_id = company_id
-           and new.company_vers_id = company_vers_id
+         where new.contact_person = contact_person
+           and new.company_id = company_id
+           and new.company_version_id = company_version_id
            and new.post_id = post_id
          order by end_ts desc
          limit 1;
@@ -42,9 +43,9 @@ begin
         
         -- Проверяем является ли вставляемая строка полным дубликатом существующей
         if ( md5(row(new.contact_person, new.phone_number, new.email,
-                     new.address, new.company_id, new.company_vers_id, new.post_id)::text)
+                     new.address, new.company_id, new.company_version_id, new.post_id)::text)
            = md5(row(p_contact_person, p_phone_number, p_email,
-                     p_address, p_company_id, p_company_vers_id, p_post_id)::text) )
+                     p_address, p_company_id, p_company_version_id, p_post_id)::text) )
         then
             -- Если все значения равны, не вставляем строку
             return null;

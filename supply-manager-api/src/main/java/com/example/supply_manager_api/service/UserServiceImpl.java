@@ -31,6 +31,8 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
+        user.setRoleId(3L);
+
         userRepository.save(user);
     }
 
@@ -47,6 +49,6 @@ public class UserServiceImpl implements UserService {
         String token = jwtUtils.generateToken(user.getUsername());
 
         // Возвращаем объект AuthResponse с токеном и userId
-        return new AuthResponse(token, user.getId());
+        return new AuthResponse(token, user.getId(), user.getRoleId());
     }
 }

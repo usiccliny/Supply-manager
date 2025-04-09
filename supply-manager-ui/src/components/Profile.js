@@ -79,97 +79,111 @@ const LoginForm = () => {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [userRole, setUserRole] = useState();
     const [message, setMessage] = useState('');
     const [userId, setUserId] = useState('');
 
     // Проверяем наличие токена в localStorage при загрузке компонента
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const savedUsername = localStorage.getItem('username'); // Сохраняем также имя пользователя
-        const userId = localStorage.getItem('userId');
-        if (token) {
-            setLoggedIn(true);
-            setUsername(savedUsername); 
-            setUserId(userId);
-        }
-    }, []);
+      const token = localStorage.getItem('token');
+      const savedUsername = localStorage.getItem('username');
+      const userId = localStorage.getItem('userId');
+      const userRole = localStorage.getItem('userRole');
+      
+      if (token) {
+          setLoggedIn(true);
+          setUsername(savedUsername); 
+          setUserId(userId);
+          setUserRole(Number(userRole)); // Преобразуем строку в число
+      }
+  }, []);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await axios.post('http://localhost:8080/api/auth/login', {
-                username,
-                password,
-            });
-
-            const { token, userId } = response.data; // Получаем JWT-токен
-            localStorage.setItem('token', token); // Сохраняем токен в localStorage
-            localStorage.setItem('userId', userId); // Сохраняем ID пользователя
-            localStorage.setItem('username', username); // Сохраняем имя пользователя
-            setLoggedIn(true); // Устанавливаем состояние входа
-            setMessage('Login successful');
-            console.log('Token saved:', token);
-        } catch (error) {
-            setMessage(error.response?.data || 'Login failed');
-        }
-    };
+      e.preventDefault();
+  
+      try {
+          const response = await axios.post('http://localhost:8080/api/auth/login', {
+              username,
+              password,
+          });
+  
+          const { token, userId, roleId } = response.data; // Получаем токен и roleId
+          localStorage.setItem('token', token); // Сохраняем токен в localStorage
+          localStorage.setItem('userId', userId); // Сохраняем ID пользователя
+          localStorage.setItem('username', username); // Сохраняем имя пользователя
+          localStorage.setItem('userRole', roleId); // Сохраняем roleId
+          setLoggedIn(true); // Устанавливаем состояние входа
+          setMessage('Login successful');
+          setUserRole(roleId); // Обновляем состояние userRole
+          console.log('Token saved:', token);
+      } catch (error) {
+          setMessage(error.response?.data || 'Login failed');
+      }
+  };
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         localStorage.removeItem('username'); // Удаляем имя пользователя
+        localStorage.removeItem('userRole');
         setLoggedIn(false); // Устанавливаем состояние выхода
         setUsername('');
         setPassword('');
     };
 
     return (
-        <div>
-            {isLoggedIn ? (
-                <div>
-                    <h1>Добро пожаловать, {username}!</h1>
-                    <button onClick={handleLogout}>Выйти</button>
-                </div>
-            ) : (
-                <LoginContainer>
-                    <Title>Вход</Title>
-                    <form onSubmit={handleSubmit}>
-                        <FormGroup>
-                            <Label htmlFor="username">Имя пользователя</Label>
-                            <Input
-                                type="text"
-                                id="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label htmlFor="password">Пароль</Label>
-                            <Input
-                               type="password"
-                               id="password"
-                               value={password}
-                               onChange={(e) => setPassword(e.target.value)}
-                               required
-                            />
-                        </FormGroup>
-                        <Button type="submit">Войти</Button>
-                    </form>
-                    {message && (
-                        <>
-                            {message === 'Login successful' ? (
-                                <SuccessMessage>{message}</SuccessMessage>
-                            ) : (
-                                <ErrorMessage>{message}</ErrorMessage>
-                            )}
-                        </>
-                    )}
-                </LoginContainer>
-            )}
-        </div>
-    );
+      <div>
+          {isLoggedIn ? (
+              userRole === 3 ? (
+                  <div>
+                      <h1>Добро пожаловать пользователь, {username}!</h1>
+                      <button onClick={handleLogout}>Выйти</button>
+                  </div>
+              ) : (
+                  <div>
+                      <h1>Добро пожаловать поставщик, {username}!</h1>
+                      <button onClick={handleLogout}>Выйти</button>
+                  </div>
+              )
+          ) : (
+              <LoginContainer>
+                  <Title>Вход</Title>
+                  <form onSubmit={handleSubmit}>
+                      <FormGroup>
+                          <Label htmlFor="username">Имя пользователя</Label>
+                          <Input
+                              type="text"
+                              id="username"
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
+                              required
+                          />
+                      </FormGroup>
+                      <FormGroup>
+                          <Label htmlFor="password">Пароль</Label>
+                          <Input
+                              type="password"
+                              id="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              required
+                          />
+                      </FormGroup>
+                      <Button type="submit">Войти</Button>
+                  </form>
+                  {message && (
+                      <>
+                          {message === 'Login successful' ? (
+                              <SuccessMessage>{message}</SuccessMessage>
+                          ) : (
+                              <ErrorMessage>{message}</ErrorMessage>
+                          )}
+                      </>
+                  )}
+              </LoginContainer>
+          )}
+      </div>
+  );
 };
 
 export default LoginForm;

@@ -15,39 +15,43 @@ declare
   p_date date;
   p_new_id int8;
   p_version_id supply_manager.product.version_id%type;
-  p_company_id supply_manager.product.company_id%type;
-  p_company_version_id supply_manager.product.company_version_id%type;
+  p_supplier_id supply_manager.product.supplier_id%type;
+  p_supplier_version_id supply_manager.product.supplier_version_id%type;
   p_category_product_id supply_manager.product.category_product_id%type;
-  p_status supply_manager.product.status%type;
+  p_status_id supply_manager.product.status_id%type;
   p_price supply_manager.product.price%type;
   p_quantity supply_manager.product.quantity%type;
-  p_description supply_manager.product.description%type;
+  p_product_name supply_manager.product.product_name%type;
+  p_photo supply_manager.product.photo%type;
+  p_video supply_manager.product.video%type;
+  p_rating supply_manager.product.rating%type;
   p_obsolete bool;
 begin
     if new.id is null then
         -- Проверяем, есть ли такая же запись в таблице
-        select id, version_id, company_id, company_version_id, category_product_id,
-               status, price, quantity, description, obsolete
-          into new.id, p_version_id, p_company_id, p_company_version_id,
-               p_category_product_id, p_status, p_price, p_quantity, p_description, p_obsolete
+        select id, version_id, supplier_id, supplier_version_id, category_product_id,
+               status_id, price, quantity, product_name, photo, video, rating, obsolete
+          into new.id, p_version_id, p_supplier_id, p_supplier_version_id,
+               p_category_product_id, p_status_id, p_price, p_quantity, p_product_name, p_photo, p_video, p_rating, p_obsolete
           from supply_manager.product
-         where new.company_id = company_id
-           and new.company_version_id = company_version_id
+         where new.supplier_id = supplier_id
+           and new.supplier_version_id = supplier_version_id
            and new.category_product_id = category_product_id
+           and new.product_name = product_name
          order by end_ts desc
          limit 1;
 
         p_date := now()::date; -- дата добавления записи
         
         -- Проверяем является ли вставляемая строка полным дубликатом существующей
-        if ( md5(row(new.company_id, new.company_version_id, new.category_product_id, new.status,
-                     new.price, new.quantity, new.description)::text)
-           = md5(row(p_company_id, p_company_version_id, p_category_product_id, p_status,
-                     p_price, p_quantity, p_description)::text) )
-        then
-            -- Если все значения равны, не вставляем строку
-            return null;
-        end if;
+--        if ( md5(row(new.supplier_id, new.supplier_version_id, new.category_product_id, new.status_id,
+--                     new.price, new.quantity, new.product_name)::text)
+--           = md5(row(p_supplier_id, p_supplier_version_id, p_category_product_id, p_status_id,
+--                     p_price, p_quantity, p_product_name)::text) )
+--        then
+--            -- Если все значения равны, не вставляем строку
+--            return null;
+--        end if;
 
         -- Обновляем срок действия предыдущей версии
         update supply_manager.product

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 // Стили для контейнера панели управления
@@ -46,8 +46,7 @@ const Icon = styled.i`
 // Стили для карточки компании
 const CompanyCard = styled.div`
   display: flex;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background: linear-gradient(135deg, rgba(144, 238, 144, 0.8) 0%, rgba(173, 255, 47, 0.6) 100%); /* Градиентный фон */
   border-radius: 8px;
   margin: 1rem 0;
   padding: 1rem;
@@ -55,6 +54,7 @@ const CompanyCard = styled.div`
   max-width: ${(props) => (props.isExpanded ? '100%' : '600px')}; /* Ширина карточек в зависимости от состояния */
   width: 100%;
   transition: transform 0.2s;
+  color: #333; /* Цвет текста */
 
   &:hover {
     transform: scale(1.02);
@@ -80,10 +80,11 @@ const InfoContainer = styled.div`
 const CompanyName = styled.h3`
   margin: 0 0 0.25rem 0;
   font-size: 1.5rem; 
+  color: #333; /* Цвет текста */
 `;
 
 const CompanyWebsite = styled.a`
-  color: #007bff; 
+  color: #0056b3; /* Цвет для ссылок на вебсайты */
   text-decoration: none; 
 
   &:hover {
@@ -94,6 +95,53 @@ const CompanyWebsite = styled.a`
 const CompanyRating = styled.p`
   margin: 0; 
   font-weight: bold; 
+`;
+
+// Стили для пагинации и выбора количества карточек
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+`;
+
+const PageButton = styled.button`
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(144, 238, 144, 0.8) 0%, rgba(173, 255, 47, 0.6) 100%);
+  color: #333; /* Цвет текста */
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease; 
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(173, 255, 47, 0.6) 0%, rgba(144, 238, 144, 0.8) 100%);
+    transform: scale(1.05); 
+  }
+
+  &.active {
+    background: linear-gradient(135deg, rgba(173, 255, 47, 0.6) 0%, rgba(144, 238, 144, 0.8) 100%);
+    color: white; 
+  }
+`;
+
+const SelectItemsPerPage = styled.select`
+  padding: 0.5rem;
+  margin-left: auto;
+  border-radius: 4px;
+  border: none;
+  background: linear-gradient(135deg, rgba(144, 238, 144, 0.8) 0%, rgba(173, 255, 47, 0.6) 100%);
+  color: #333; 
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(173, 255, 47, 0.6) 0%, rgba(144, 238, 144, 0.8) 100%);
+  }
+
+  &:focus {
+    outline: none; 
+    box-shadow: 0 0 5px rgba(173, 255, 47, 0.6); 
+  }
 `;
 
 // Компонент карточки компании
@@ -112,55 +160,57 @@ const Company = ({ logo, name, website, rating, isExpanded }) => (
 
 // Основной компонент Dashboard
 const Dashboard = () => {
-  const [isExpanded, setIsExpanded] = useState(false); // Состояние для управления режимом
-  const [isActive, setIsActive] = useState(false); // Состояние для анимации кнопки
+  const [isExpanded, setIsExpanded] = useState(false); 
+  const [isActive, setIsActive] = useState(false);
+  const [companies, setCompanies] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1); // Текущая страница
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Количество карточек на странице
 
   const toggleExpansion = () => {
-    setIsExpanded((prev) => !prev); // Переключаем состояние
-    setIsActive(true); // Активируем анимацию
-
-    // Убираем анимацию через 300 мс
+    setIsExpanded((prev) => !prev);
+    setIsActive(true);
     setTimeout(() => setIsActive(false), 300);
   };
 
-  const companies = [
-    {
-      logo: 'https://via.placeholder.com/80',
-      name: 'Компания A',
-      website: 'https://www.companya.com',
-      rating: 4.8,
-    },
-    {
-      logo: 'https://via.placeholder.com/80',
-      name: 'Компания B',
-      website: 'https://www.companyb.com',
-      rating: 4.2,
-    },
-    {
-      logo: 'https://via.placeholder.com/80',
-      name: 'Компания C',
-      website: 'https://www.companyc.com',
-      rating: 3.9,
-    },
-    {
-      logo: 'https://via.placeholder.com/80',
-      name: 'Компания D',
-      website: 'https://www.companyd.com',
-      rating: 4.6,
-    },
-    {
-      logo: 'https://via.placeholder.com/80',
-      name: 'Компания E',
-      website: 'https://www.companye.com',
-      rating: 4.0,
-    },
-    {
-      logo: 'https://via.placeholder.com/80',
-      name: 'Компания F',
-      website: 'https://www.companyf.com',
-      rating: 4.3,
-    },
-  ];
+  const fetchCompanies = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/companies');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setCompanies(data);
+    } catch (error) {
+      setError(`Ошибка при загрузке данных: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(Number(e.target.value));
+    setCurrentPage(1); // Сброс текущей страницы при изменении количества карточек на странице
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Расчет индексов для текущей страницы
+  const indexOfLastCompany = currentPage * itemsPerPage;
+  const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
+  const currentCompanies = companies.slice(indexOfFirstCompany, indexOfLastCompany);
+
+  const totalPages = Math.ceil(companies.length / itemsPerPage); // Общее количество страниц
+
+  if (loading) return <p>Загрузка...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <DashboardContainer>
@@ -169,16 +219,33 @@ const Dashboard = () => {
       <ToggleButton onClick={toggleExpansion} className={isActive ? 'active' : ''}>
         <Icon className={`fas fa-expand-arrows-alt`} />
       </ToggleButton>
-      {companies.map((company, index) => (
+      {currentCompanies.map((company) => (
         <Company
-          key={index}
-          logo={company.logo}
+          key={company.id} 
+          logo={company.logotype || 'https://via.placeholder.com/80'} 
           name={company.name}
           website={company.website}
           rating={company.rating}
-          isExpanded={isExpanded} // Передаем в карточку как вспомогательный проп
+          isExpanded={isExpanded} 
         />
       ))}
+      <PaginationContainer>
+        <div>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+            <PageButton 
+              key={page} 
+              onClick={() => handlePageChange(page)} 
+              className={currentPage === page ? 'active' : ''}>
+              {page}
+            </PageButton>
+          ))}
+        </div>
+        <SelectItemsPerPage onChange={handleItemsPerPageChange} value={itemsPerPage}>
+          <option value={10}>10</option>
+          <option value={15}>15</option>
+          <option value={20}>20</option>
+        </SelectItemsPerPage>
+      </PaginationContainer>
     </DashboardContainer>
   );
 };

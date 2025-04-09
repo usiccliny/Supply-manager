@@ -6,9 +6,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserDto {
-    // Геттеры и сеттеры
     private String username;
     private String password;
     private String email;
-
+    private String role;
 }

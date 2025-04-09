@@ -3,3 +3,11 @@ databaseChangeLog:
       - file: /db/changelog/view/2025-03-04-create_function_fv_orders.sql
   - include:
       - file: /db/changelog/view/2025-03-04-create_function_fv_suppliers.sql
+  - include:
+      - file: /db/changelog/view/2025-03-09-create_view_v_order_detail.sql
+  - include:
+      - file: /db/changelog/view/2025-03-23-create_view_v_supplier.sql
+  - include:
+      - file: /db/changelog/view/2025-03-29-create_view_v_product.sql
+  - include:
+      - file: /db/changelog/view/2025-04-09-create_view_v_product_card.sql

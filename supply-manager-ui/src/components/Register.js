@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom'; // Импортируем useNavigate
-import axios from 'axios'; // Импортируем axios
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const RegisterContainer = styled.div`
   max-width: 400px;
@@ -65,83 +65,228 @@ const Button = styled.button`
 `;
 
 const ErrorMessage = styled.p`
-  color: red; /* Красный текст для ошибок */
+  color: red;
   text-align: center;
   margin-top: 10px;
 `;
 
 const SuccessMessage = styled.p`
-  color: green; /* Зелёный текст для успешных сообщений */
+  color: green;
   text-align: center;
   margin-top: 10px;
 `;
 
+const RoleSwitcher = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+`;
+
+const RadioLabel = styled.label`
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  input {
+    margin-right: 5px;
+  }
+
+  &:hover {
+    color: #007bff;
+  }
+`;
+
 const Register = () => {
+  const [role, setRole] = useState('user'); // Состояние для роли
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState(''); // Для отображения сообщений
-  const navigate = useNavigate(); // Создаем экземпляр navigate
+  const [contactPerson, setContactPerson] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [position, setPosition] = useState('');
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Предотвращаем перезагрузку страницы
+    e.preventDefault();
 
     try {
       const response = await axios.post('http://localhost:8080/api/auth/register', {
+        role,
         username,
         password,
         email,
+        contactPerson,
+        phoneNumber,
+        address,
+        companyName,
+        position,
       });
 
-      setMessage(response.data); // Отображаем успешное сообщение
+      setMessage(response.data);
 
+      // Сброс состояния формы
       setUsername('');
       setPassword('');
       setEmail('');
+      setContactPerson('');
+      setPhoneNumber('');
+      setAddress('');
+      setCompanyName('');
+      setPosition('');
 
-      // Переходим на главную страницу после успешной регистрации
       if (response.data === 'User registered successfully') {
-        navigate('/'); // Замените '/' на нужный вам маршрут
+        navigate('/');
       }
     } catch (error) {
-      setMessage(error.response?.data || 'Registration failed'); // Отображаем ошибку
+      setMessage(error.response?.data || 'Registration failed');
     }
   };
 
   return (
     <RegisterContainer>
       <Title>Создайте аккаунт</Title>
+      <RoleSwitcher>
+        <RadioLabel>
+          <input
+            type="radio"
+            value="user"
+            checked={role === 'user'}
+            onChange={() => setRole('user')}
+          /> 
+          Пользователь
+        </RadioLabel>
+        <RadioLabel>
+          <input
+            type="radio"
+            value="supplier"
+            checked={role === 'supplier'}
+            onChange={() => setRole('supplier')}
+          /> 
+          Поставщик
+        </RadioLabel>
+      </RoleSwitcher>
       <form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label htmlFor="username">Имя пользователя</Label>
-          <Input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="email">Электронная почта</Label>
-          <Input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="password">Пароль</Label>
-          <Input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </FormGroup>
+        {role === 'user' ? (
+          <>
+            <FormGroup>
+              <Label htmlFor="username">Имя пользователя</Label>
+              <Input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="email">Электронная почта</Label>
+              <Input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="password">Пароль</Label>
+              <Input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </FormGroup>
+          </>
+        ) : (
+          <>
+            <FormGroup>
+              <Label htmlFor="contactPerson">Контактное лицо</Label>
+              <Input
+                type="text"
+                id="contactPerson"
+                value={contactPerson}
+                onChange={(e) => setContactPerson(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="phoneNumber">Номер телефона</Label>
+              <Input
+                type="text"
+                id="phoneNumber"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="email">Электронная почта</Label>
+              <Input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="address">Адрес</Label>
+              <Input
+                type="text"
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="companyName">Имя компании</Label>
+              <Input
+                type="text"
+                id="companyName"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="position">Должность</Label>
+              <Input
+                type="text"
+                id="position"
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="username">Имя пользователя</Label>
+              <Input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="password">Пароль</Label>
+              <Input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </FormGroup>            
+          </>
+        )}
         <Button type="submit">Зарегистрироваться</Button>
       </form>
       {message && (
