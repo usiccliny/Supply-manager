@@ -1,12 +1,18 @@
 package com.example.supply_manager_api.controller;
 
+import com.example.supply_manager_api.dto.AttributeDto;
 import com.example.supply_manager_api.dto.ProductDto;
+import com.example.supply_manager_api.model.ProductCard;
 import com.example.supply_manager_api.model.ProductCategory;
 import com.example.supply_manager_api.model.ProductStatus;
 import com.example.supply_manager_api.model.ViewProduct;
+import com.example.supply_manager_api.service.ProductAttributeService;
+import com.example.supply_manager_api.service.ProductCardService;
 import com.example.supply_manager_api.service.ProductService;
 import com.example.supply_manager_api.service.ViewProductService;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +27,12 @@ public class ProductController {
 
     @Autowired
     private ViewProductService viewProductService;
+
+    @Autowired
+    private ProductCardService productCardService;
+
+    @Autowired
+    private ProductAttributeService productAttributeService;
 
     /**
      * Метод для добавления нового товара.
@@ -66,5 +78,46 @@ public class ProductController {
     @GetMapping("/catalog")
     public List<ViewProduct> getAllProducts(){
         return viewProductService.getAllProducts();
+    }
+
+    @GetMapping("/{id}")
+    public ProductCard getProductCardById(@PathVariable Long id) {
+        return productCardService.getProductCardById(id);
+    }
+
+    // Добавить новый атрибут
+    @PostMapping("/{productId}/attributes/add")
+    public ResponseEntity<AttributeDto> addAttribute(
+            @PathVariable Long productId,
+            @RequestBody AttributeDto request) {
+        // Вызываем сервис для добавления атрибута
+        AttributeDto createdAttribute = productAttributeService.addAttribute(
+                productId,
+                request.getProductVersionId(),
+                request.getName(),
+                request.getValue(),
+                request.getUnit(),
+                request.getType()
+        );
+
+        // Возвращаем созданный атрибут с HTTP-статусом 201 (Created)
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAttribute);
+    }
+
+    // Изменить значение атрибута
+    @PutMapping("/{productId}/attributes/{attributeId}")
+    public ResponseEntity<AttributeDto> updateAttribute(
+            @PathVariable Long attributeId,
+            @RequestParam String value) {
+        AttributeDto updatedAttribute = productAttributeService.updateAttribute(attributeId, value);
+
+        // Возвращаем созданный атрибут с HTTP-статусом 200 (OK)
+        return ResponseEntity.ok(updatedAttribute);
+    }
+
+    // Удалить атрибут
+    @DeleteMapping("/{id}/attributes/{attributeId}")
+    public void deleteAttribute(@PathVariable Long attributeId) {
+        productAttributeService.deleteAttribute(attributeId);
     }
 }

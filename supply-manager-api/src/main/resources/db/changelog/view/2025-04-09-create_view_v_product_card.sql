@@ -27,7 +27,11 @@ as
            p.photo,
            p.video,
            p.rating,
-           jsonb_object_agg(a.name, pa.value) FILTER (WHERE a.name IS NOT NULL AND pa.value IS NOT NULL) as attributes,
+           jsonb_agg(
+               jsonb_build_object(
+                   'id', a.id,
+                   'name', a.name,
+                   'value', pa.value)) filter (where a.name is not null and pa.value is not null) as attributes,
            p.begin_ts::date as created_date
       from supply_manager.supplier s
       join supply_manager.product p 

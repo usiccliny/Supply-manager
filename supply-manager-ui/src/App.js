@@ -7,6 +7,7 @@ import SupplierList from './components/SupplierList';
 import Report from './components/Report';
 import Profile from './components/Profile';
 import Register from './components/Register';
+import ProductCard from './components/ProductCard';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/reports" element={<Report />} />
         <Route path="/profile" element={<Profile loggedIn={loggedIn} />} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/products/:productId" element={<ProductCard />} />
       </Routes>
     </Router>
   );

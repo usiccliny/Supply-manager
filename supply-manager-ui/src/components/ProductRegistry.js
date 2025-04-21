@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import AddProductForm from './AddProduct'; // Форма добавления/редактирования товара
+import { useParams, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { FaArrowRight, FaCheck } from 'react-icons/fa';
 
 // Стили для таблицы
 const ProductTable = styled.table`
@@ -44,31 +47,24 @@ const FiltersContainer = styled.div`
 const FilterButton = styled.button`
   padding: 0.6rem 1rem;
   font-size: 0.9rem;
-  color: #fff;
-  border: none;
+  color: #333; // Темный текст для лучшей читаемости
+  background: #f0f8ff; // Единый светлый фон
+  border: 1px solid #ddd; // Легкая граница
   border-radius: 5px;
   cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: all 0.3s ease; // Плавные переходы
+
+  &:hover {
+    background: #e0f7fa; // Подсветка при наведении
+    transform: scale(1.02); // Небольшое увеличение
+  }
 
   &.active {
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-
-  &.all {
-    background: linear-gradient(135deg, rgba(71, 159, 255, 0.8) 0%, rgba(128, 196, 255, 0.6) 100%);
-  }
-
-  &.available {
-    background: #a8dadc;
-  }
-
-  &.ended {
-    background: #ffafcc;
-  }
-
-  &.coming {
-    background: #ffd6a5;
+    background: #a8dadc; // Выделенный фон
+    border-color: #007bff; // Яркая граница
+    transform: scale(1.05); // Увеличение размера
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Тень
+    font-weight: bold; // Жирный текст
   }
 `;
 
@@ -111,12 +107,22 @@ const ActionButton = styled.button`
   }
 `;
 
+const TableRow = styled.tr`
+  cursor: pointer; // Указывает, что строка кликабельна
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f0f8ff; // Подсветка при наведении
+  }
+`;
+
 const ProductRegistry = () => {
   const [products, setProducts] = useState([]); // Все товары
   const [filteredProducts, setFilteredProducts] = useState([]); // Отфильтрованные товары
   const [activeFilter, setActiveFilter] = useState('all'); // Активный фильтр
   const [isFormVisible, setIsFormVisible] = useState(false); // Видимость формы
   const [editingProduct, setEditingProduct] = useState(null); // Товар для редактирования
+  const navigate = useNavigate();
 
   // Загрузка данных из API
   useEffect(() => {
@@ -181,25 +187,25 @@ const ProductRegistry = () => {
       {/* Фильтры */}
       <FiltersContainer>
         <FilterButton
-          className={`all ${activeFilter === 'all' ? 'active' : ''}`}
+          className={activeFilter === 'all' ? 'active' : ''}
           onClick={() => handleFilterChange('all')}
         >
-          Все товары
+          Все товары 
         </FilterButton>
         <FilterButton
-          className={`available ${activeFilter === 'Есть в наличии' ? 'active' : ''}`}
+          className={activeFilter === 'Есть в наличии' ? 'active' : ''}
           onClick={() => handleFilterChange('Есть в наличии')}
         >
           Доступные
         </FilterButton>
         <FilterButton
-          className={`ended ${activeFilter === 'Закончился' ? 'active' : ''}`}
+          className={activeFilter === 'Закончился' ? 'active' : ''}
           onClick={() => handleFilterChange('Закончился')}
         >
           Закончившиеся
         </FilterButton>
         <FilterButton
-          className={`coming ${activeFilter === 'Скоро появится' ? 'active' : ''}`}
+          className={activeFilter === 'Скоро появится' ? 'active' : ''}
           onClick={() => handleFilterChange('Скоро появится')}
         >
           Ожидающие
@@ -207,47 +213,74 @@ const ProductRegistry = () => {
       </FiltersContainer>
 
       {/* Таблица товаров */}
-      {filteredProducts.length > 0 ? (
-        <ProductTable>
-          <thead>
-            <tr>
-              <th>Категория</th>
-              <th>Статус</th>
-              <th>Название товара</th>
-              <th>Цена</th>
-              <th>Количество</th>
-              <th>Дата создания</th>
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.map((product, idx) => (
-              <tr key={idx}>
-                <td>{product.categoryName}</td>
-                <td>{product.productStatus}</td>
-                <td>{product.productName}</td>
-                <td>{product.price.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</td>
-                <td>{product.quantity}</td>
-                <td>{new Date(product.createdDate).toLocaleDateString()}</td>
-                <td>
-                  <ActionButton className="edit" onClick={() => handleEditProduct(product)}>
-                    Редактировать
-                  </ActionButton>
-                  <ActionButton
-                    className="delete"
-                    onClick={() => handleDeleteProduct(product)}
-                    style={{ marginLeft: '0.5rem' }}
-                  >
-                    Удалить
-                  </ActionButton>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </ProductTable>
-      ) : (
-        <p>Нет товаров в этой категории.</p>
-      )}
+{filteredProducts.length > 0 ? (
+  <ProductTable>
+    <thead>
+      <tr>
+        <th>Категория</th>
+        <th>Статус</th>
+        <th>Название товара</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Дата создания</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredProducts.map((product, idx) => (
+        <TableRow
+          key={idx}
+          onClick={() => navigate(`/products/${product.productId}`)} // Переход на карточку товара
+          title="Нажмите, чтобы перейти к карточке товара"
+        >
+          <td>{product.categoryName}</td>
+          <td>{product.productStatus}</td>
+          <td>{product.productName}</td>
+          <td>
+            {product.price.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}
+          </td>
+          <td>{product.quantity}</td>
+          <td>{new Date(product.createdDate).toLocaleDateString()}</td>
+          <td>
+            {/* Кнопка "Редактировать" */}
+            <ActionButton
+              className="edit"
+              onClick={(e) => {
+                e.stopPropagation(); // Отменяем всплытие события
+                handleEditProduct(product);
+              }}
+            >
+              Редактировать
+            </ActionButton>
+
+            {/* Кнопка "Удалить" */}
+            <ActionButton
+              className="delete"
+              onClick={(e) => {
+                e.stopPropagation(); // Отменяем всплытие события
+                handleDeleteProduct(product);
+              }}
+              style={{ marginLeft: '0.5rem' }}
+            >
+              Удалить
+            </ActionButton>
+
+            {/* Иконка для перехода на карточку товара */}
+            <FaArrowRight
+              style={{ marginLeft: '1rem', color: '#007bff', fontSize: '1.2rem', cursor: 'pointer' }}
+              onClick={(e) => {
+                e.stopPropagation(); // Отменяем всплытие события
+                navigate(`/products/${product.productId}`);
+              }}
+            />
+          </td>
+        </TableRow>
+      ))}
+    </tbody>
+  </ProductTable>
+) : (
+  <p>Нет товаров в этой категории.</p>
+)}
 
       {/* Кнопка добавления товара */}
       <AddProductButton onClick={() => setIsFormVisible(true)}>Добавить товар</AddProductButton>
