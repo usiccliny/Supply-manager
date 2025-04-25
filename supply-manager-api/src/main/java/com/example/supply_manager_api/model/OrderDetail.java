@@ -1,46 +1,61 @@
 package com.example.supply_manager_api.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Immutable;
+import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+import java.time.LocalDateTime;
+
+@Data
 @Entity
-@Immutable
-@Table (name = "v_order_detail", schema = "supply_manager")
+@Table(name = "order_detail", schema = "supply_manager")
 public class OrderDetail {
 
     @Id
-    @Column(name = "order_detail_id")
-    private Long orderDetailId;
+    @Column(name = "version_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long versionId;
+
+    @Column(name = "id")
+    @Generated(GenerationTime.INSERT)
+    private Long id;
 
     @Column(name = "order_id")
     private Long orderId;
 
-    @Column(name = "supplier_id")
-    private Long supplierId;
+    @Column(name = "order_version_id")
+    private Long orderVersionId;
 
-    @Column(name = "product_id")
-    private Long productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id"),
+            @JoinColumn(name = "supplier_version_id", referencedColumnName = "supplier_version_id")
+    })
+    private Supplier supplier;
 
-    @Column(name = "product_name")
-    private String productName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            @JoinColumn(name = "product_version_id", referencedColumnName = "version_id")
+    })
+    private Product product;
 
-    @Column(name = "contact_person")
-    private String contactPerson;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    @Column(name = "price")
-    private Double price;
-
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private Long quantity;
+
+    @Column(name = "date_created", nullable = false)
+    private LocalDateTime dateCreated;
+
+    @Column(name = "date_modified", nullable = false)
+    private LocalDateTime dateModified;
+
+    @Column(name = "obsolete")
+    private Boolean obsolete;
+
+    @Column(name = "begin_ts")
+    private LocalDateTime beginTs;
+
+    @Column(name = "end_ts")
+    private LocalDateTime endTs;
 }

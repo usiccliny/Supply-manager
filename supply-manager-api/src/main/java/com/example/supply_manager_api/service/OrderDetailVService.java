@@ -1,7 +1,7 @@
 package com.example.supply_manager_api.service;
 
-import com.example.supply_manager_api.model.OrderDetail;
-import com.example.supply_manager_api.repository.OrderDetailRepository;
+import com.example.supply_manager_api.model.OrderDetailV;
+import com.example.supply_manager_api.repository.OrderDetailVRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +11,17 @@ import org.springframework.dao.DataAccessException;
 import java.util.List;
 
 @Service
-public class OrderDetailService {
+public class OrderDetailVService {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderDetailService.class);
+    private static final Logger logger = LoggerFactory.getLogger(OrderDetailVService.class);
 
     @Autowired
-    private OrderDetailRepository orderDetailRepository;
+    private OrderDetailVRepository orderDetailVRepository;
 
-    public List<OrderDetail> getOrderDetailsByOrderId(Long orderId) {
+    public List<OrderDetailV> getOrderDetailsByOrderId(Long orderId) {
         try {
             logger.info("Fetching order details for order ID: {}", orderId);
-            List<OrderDetail> details = orderDetailRepository.findByOrderId(orderId);
+            List<OrderDetailV> details = orderDetailVRepository.findByOrderId(orderId);
             logger.info("Found {} order details", details.size());
             return details;
         } catch (DataAccessException e) {

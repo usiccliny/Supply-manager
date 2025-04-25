@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import AddProductForm from './AddProduct'; // Форма добавления/редактирования товара
 import { useParams, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { FaArrowRight, FaCheck } from 'react-icons/fa';
 
 // Стили для таблицы
@@ -124,46 +123,37 @@ const ProductRegistry = () => {
   const [editingProduct, setEditingProduct] = useState(null); // Товар для редактирования
   const navigate = useNavigate();
 
-  // Загрузка данных из API
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/products/catalog');
-        setProducts(response.data);
-        setFilteredProducts(response.data); // Изначально показываем все товары
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchProducts();
-  }, []);
+  const userId = localStorage.getItem('userId');
 
-  // Функция для обновления данных после добавления/редактирования
-  const refreshProducts = async () => {
+
+  const fetchProducts = async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/products/catalog');
-      setProducts(response.data);
-      setFilteredProducts(response.data); // Обновляем отфильтрованные товары
+      const filteredData = response.data.filter(item => item.userId === parseInt(userId));
+      setProducts(filteredData);
+      setFilteredProducts(filteredData);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // Фильтрация товаров
+  useEffect(() => {fetchProducts();}, []);
+
+  const refreshProducts = async () => {fetchProducts();};
+
   const handleFilterChange = (status) => {
     setActiveFilter(status);
     if (status === 'all') {
-      setFilteredProducts(products); // Показать все товары
+      setFilteredProducts(products);
     } else {
       const filtered = products.filter((product) => product.productStatus === status);
-      setFilteredProducts(filtered); // Показать товары только с выбранным статусом
+      setFilteredProducts(filtered);
     }
   };
 
-  // Обработка редактирования товара
   const handleEditProduct = (product) => {
-    setEditingProduct(product); // Устанавливаем товар для редактирования
-    setIsFormVisible(true); // Показываем форму
+    setEditingProduct(product); 
+    setIsFormVisible(true); 
   };
 
   // Обработка удаления товара

@@ -1,8 +1,8 @@
 --liquibase formatted sql
---changeset eshardakov:create_function_f_order_detail_insert runOnChange:true endDelimiter:/
+--changeset eshardakov:create_function_f_order_detail_id_insert runOnChange:true endDelimiter:/
 --comment АРМ Менеджер по поставкам. Триггер для вычисления значений версионных полей для таблицы Детали Заказов.
 
-create or replace function supply_manager.f_order_detail_insert()
+create or replace function supply_manager.f_order_detail_id_insert()
 returns trigger as $$
 /*
  * version: 1.0
@@ -98,5 +98,5 @@ $$ language plpgsql;
 create or replace trigger tg_order_detail_insert
 before insert on supply_manager.order_detail
 for each row
-execute function supply_manager.f_order_detail_insert();
+execute function supply_manager.f_order_detail_id_insert();
 /

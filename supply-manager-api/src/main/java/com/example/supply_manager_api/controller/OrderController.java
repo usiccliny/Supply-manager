@@ -1,8 +1,10 @@
 package com.example.supply_manager_api.controller;
 
 import com.example.supply_manager_api.dto.OrderDto;
-import com.example.supply_manager_api.model.OrderDetail;
-import com.example.supply_manager_api.service.OrderDetailService;
+import com.example.supply_manager_api.dto.OrderRequestDTO;
+import com.example.supply_manager_api.model.OrderDetailV;
+import com.example.supply_manager_api.service.OrderDetailVService;
+import com.example.supply_manager_api.service.OrderServ;
 import com.example.supply_manager_api.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,10 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
-    private OrderDetailService orderDetailService;
+    private OrderServ orderServ;
+
+    @Autowired
+    private OrderDetailVService orderDetailVService;
 
     @GetMapping()
     public List<OrderDto> getOrdersByUserId(@RequestParam Long userId) {
@@ -25,7 +30,13 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public List<OrderDetail> getOrderDetailByOrderId (@PathVariable Long orderId){
-        return orderDetailService.getOrderDetailsByOrderId(orderId);
+    public List<OrderDetailV> getOrderDetailByOrderId (@PathVariable Long orderId){
+        return orderDetailVService.getOrderDetailsByOrderId(orderId);
+    }
+
+    @PostMapping
+    public String createOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
+        orderServ.createOrder(orderRequestDTO);
+        return "Order created successfully!";
     }
 }

@@ -35,7 +35,8 @@ as
         on scp.id = p.category_product_id
       join supply_manager.sp_product_status sps
         on sps.id = p.status_id
-     where not s.obsolete;
+     where not s.obsolete
+     order by sps.name;
 
 /* Пример использования
    

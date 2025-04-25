@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import CategoryOrderList from './CategoryOrderList';
 
 // Стили компонентов
 const OrderListContainer = styled.div`
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const OrderRegistryWidget = styled.div`
@@ -22,7 +25,7 @@ const OrderRegistryWidget = styled.div`
 
   /* Если нужно зафиксировать виджет в левой части экрана */
   position: fixed;
-  left: 80px; // Фиксированный отступ слева
+  left: 30px; // Фиксированный отступ слева
 `;  
 
 const FiltersContainer = styled.div`
@@ -32,47 +35,22 @@ const FiltersContainer = styled.div`
   justify-content: space-between;
 `;
 
-const FilterButton = styled.button`
-  flex: 1;
-  padding: 0.6rem 1rem;
-  font-size: 0.85rem;
-  color: #fff;
-  border: none;
+const FilterButton = styled.div`
+  width: auto; // Автоматическая ширина
+  margin: 0.5rem;
+  padding: 1rem;
   border-radius: 5px;
-  cursor: pointer;
+  background: #fff; // Белый фон
+  color: #333; // Темный текст
   transition: transform 0.3s, box-shadow 0.3s;
 
   &.active {
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(144, 238, 144, 0.8) 0%, rgba(173, 255, 47, 0.6) 100%);
   }
 
-  &.all {
-    background: linear-gradient(135deg, rgba(71, 159, 255, 0.8) 0%, rgba(128, 196, 255, 0.6) 100%);
-  }
-
-  &.pending {
-    background: #ffafcc; // Розовый
-  }
-
-  &.paid {
-    background: #a8dadc; // Голубой
-  }
-
-  &.processing {
-    background: #ffd6a5; // Оранжевый
-  }
-
-  &.delivered {
-    background: #c7f9cc; // Светло-зеленый
-  }
-
-  &.cancelled {
-    background: #ff9aa2; // Красный
-  }
-
-  &.return {
-    background: #b5eada; // Бирюзовый
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -216,23 +194,22 @@ const OrderListPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [isWidgetVisible, setIsWidgetVisible] = useState(true); // Состояние видимости виджета
   const userRole = parseInt(localStorage.getItem('userRole'), 10);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const userId = localStorage.getItem('userId');
-        if (!userId) return;
+  const fetchOrders = async () => {
+    try {
+      const userId = localStorage.getItem('userId');
+      if (!userId) return;
 
-        const response = await axios.get(`http://localhost:8080/api/orders?userId=${userId}`);
-        setOrders(response.data);
-        setFilteredOrders(response.data); // Изначально показываем все заказы
-      } catch (err) {
-        console.error(err);
-      }
-    };
+      const response = await axios.get(`http://localhost:8080/api/orders?userId=${userId}`);
+      setOrders(response.data);
+      setFilteredOrders(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    fetchOrders();
-  }, []);
+  useEffect(() => {fetchOrders();}, []);
 
   // Расчет статистики
   const calculateStatistics = () => {
@@ -426,6 +403,18 @@ const OrderListPage = () => {
       ) : (
         <p>Нет заказов в этой категории.</p>
       )}
+
+        <div>
+          <button onClick={() => setIsModalOpen(true)}>Сделать заказ</button>
+            {isModalOpen && (
+              <CategoryOrderList
+                onClose={() => {
+                setIsModalOpen(false);
+                fetchOrders(); // Обновляем данные при закрытии модального окна
+                }}
+              />
+            )}
+        </div>
 
       {/* Пагинация */}
       <PaginationControls>
