@@ -1,7 +1,6 @@
-// RatingCard.js
-
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Стилизованные компоненты
 const Card = styled.div`
@@ -44,9 +43,22 @@ const RatingItem = styled.li`
   margin-bottom: 0.5rem;
   font-size: 18px;
   color: #ffffff; /* Белый текст */
+  cursor: ${(props) => (props.isLink ? 'pointer' : 'default')}; /* Указатель "рука" при наведении */
+  transition: background 0.3s ease; /* Плавная анимация */
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Подсветка при наведении */
+  }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none; /* Убираем синюю подчеркивание */
+  color: inherit; /* Наследуем цвет текста из родительского элемента */
 `;
 
 const RatingCard = ({ title, data }) => {
+  const isPopularProductsRating = title === "Рейтинг популярности товаров";
+
   return (
     <Card>
       {/* Название рейтинга */}
@@ -55,11 +67,25 @@ const RatingCard = ({ title, data }) => {
       {/* Прокручиваемое содержимое */}
       <ScrollableContent>
         <RatingList>
-          {data.map((item, index) => (
-            <RatingItem key={index}>
-              <strong>{item.totalRank}. {item.contactPerson}</strong> (Рейтинг: {item.totalRating.toFixed(2)})
-            </RatingItem>
-          ))}
+          {data.map((item, index) => {
+            if (isPopularProductsRating) {
+              // Для "Рейтинг популярности товаров" создаем ссылки
+              return (
+                <StyledLink to={`/products/${item.productId}`} key={index}>
+                  <RatingItem isLink>
+                    <strong>{item.totalRank}. {item.productName}</strong> (Рейтинг: {item.totalRating.toFixed(2)})
+                  </RatingItem>
+                </StyledLink>
+              );
+            } else {
+              // Для других рейтингов просто выводим текст
+              return (
+                <RatingItem key={index}>
+                  <strong>{item.totalRank}. {item.contactPerson}</strong> (Рейтинг: {item.totalRating.toFixed(2)})
+                </RatingItem>
+              );
+            }
+          })}
         </RatingList>
       </ScrollableContent>
     </Card>

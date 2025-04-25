@@ -13,3 +13,5 @@ databaseChangeLog:
       - file: /db/changelog/view/2025-04-09-create_view_v_product_card.sql
   - include:
       - file: /db/changelog/view/2025-04-23-create_view_v_supplier_rating.sql
+  - include:
+      - file: /db/changelog/view/2025-04-25-create_view_fv_product_rating.sql

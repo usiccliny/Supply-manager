@@ -106,7 +106,7 @@ const Navbar = () => {
           <FaPeopleArrows /> Поставщики
         </NavItem>
         <NavItem to="/reports">
-          <FaFileAlt /> Отчеты
+          <FaFileAlt /> Рейтинг
         </NavItem>
       </LeftNavItems>
       <RightNavItems>
@@ -124,7 +124,7 @@ const Navbar = () => {
         <DropdownItem to="/" onClick={toggleMenu}>Главная</DropdownItem>
         <DropdownItem to="/orders" onClick={toggleMenu}>Заказы</DropdownItem>
         <DropdownItem to="/suppliers" onClick={toggleMenu}>Поставщики</DropdownItem>
-        <DropdownItem to="/reports" onClick={toggleMenu}>Отчеты</DropdownItem>
+        <DropdownItem to="/reports" onClick={toggleMenu}>Рейтинг</DropdownItem>
         <DropdownItem to="/profile" onClick={toggleMenu}>Личный профиль</DropdownItem>
         <DropdownItem to="/register" onClick={toggleMenu}>Регистрация</DropdownItem>
       </DropdownMenu>

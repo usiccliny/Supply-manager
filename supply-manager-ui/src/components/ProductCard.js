@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-// Стили для карточки товара
 const FullScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -186,16 +185,17 @@ const AddAttributeForm = styled.form`
 const ProductCard = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const [attributes, setAttributes] = useState([]); // Инициализируем attributes как пустой массив
+  const [attributes, setAttributes] = useState([]);
   const [mediaIndex, setMediaIndex] = useState(0);
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/products/${productId}`);
         setProduct(response.data);
-        setAttributes(response.data.attributes || []); // Устанавливаем атрибуты, если они есть
+        setAttributes(response.data.attributes || []);
       } catch (err) {
         console.error(err);
         alert('Ошибка при загрузке данных товара.');
@@ -217,6 +217,8 @@ const ProductCard = () => {
   };
 
   const handleUpdateAttribute = async (attributeId, value) => {
+    if (!isEditable()) return;
+
     try {
       await axios.put(`http://localhost:8080/api/products/${productId}/attributes/${attributeId}`, null, {
         params: { value },
@@ -231,6 +233,8 @@ const ProductCard = () => {
   };
 
   const handleDeleteAttribute = async (attributeId) => {
+    if (!isEditable()) return;
+
     try {
       await axios.delete(`http://localhost:8080/api/products/${productId}/attributes/${attributeId}`);
       setAttributes((prev) => prev.filter((attr) => attr.id !== attributeId));
@@ -241,9 +245,11 @@ const ProductCard = () => {
   };
 
   const handleAddAttribute = async (e) => {
+    if (!isEditable()) return;
+
     e.preventDefault();
     const { name, value } = e.target.elements;
-  
+
     try {
       const response = await axios.post(`http://localhost:8080/api/products/${productId}/attributes/add`, {
         productId: product.productId,
@@ -253,21 +259,21 @@ const ProductCard = () => {
         type: 'string',
         unit: '',
       });
-  
-      if (!response.data || !response.data.attributeId) {
-        throw new Error('Сервер не вернул ID нового атрибута.');
-      }
-  
+
       setAttributes((prev) => [
         ...prev,
         { id: response.data.attributeId, name: response.data.name, value: response.data.value },
       ]);
-  
+
       e.target.reset();
     } catch (err) {
       console.error(err);
       alert('Ошибка при добавлении атрибута.');
     }
+  };
+
+  const isEditable = () => {
+    return userId && product?.userId === parseInt(userId, 10);
   };
 
   const photos = product?.photo?.split(';').filter((item) => item.trim()) || [];
@@ -282,7 +288,6 @@ const ProductCard = () => {
       </Header>
 
       <ContentWrapper>
-        {/* Медиа-секция */}
         <MediaSection>
           {media.length > 0 ? (
             <>
@@ -304,7 +309,6 @@ const ProductCard = () => {
           )}
         </MediaSection>
 
-        {/* Информационная секция */}
         <InfoSection>
           <div>
             <SectionTitle>Основная информация</SectionTitle>
@@ -333,13 +337,19 @@ const ProductCard = () => {
                   <li key={attr.id}>
                     <span>{attr.name}:</span>
                     <div>
-                      <AttributeInput
-                        defaultValue={attr.value}
-                        onBlur={(e) => handleUpdateAttribute(attr.id, e.target.value)}
-                      />
-                      <ActionButton danger onClick={() => handleDeleteAttribute(attr.id)}>
-                        Удалить
-                      </ActionButton>
+                      {isEditable() ? (
+                        <>
+                          <AttributeInput
+                            defaultValue={attr.value}
+                            onBlur={(e) => handleUpdateAttribute(attr.id, e.target.value)}
+                          />
+                          <ActionButton danger onClick={() => handleDeleteAttribute(attr.id)}>
+                            Удалить
+                          </ActionButton>
+                        </>
+                      ) : (
+                        <span>{attr.value}</span>
+                      )}
                     </div>
                   </li>
                 ))}
@@ -348,11 +358,13 @@ const ProductCard = () => {
               <p>Нет атрибутов.</p>
             )}
 
-            <AddAttributeForm onSubmit={handleAddAttribute}>
-              <input type="text" name="name" placeholder="Название атрибута" required />
-              <input type="text" name="value" placeholder="Значение атрибута" required />
-              <button type="submit">Добавить</button>
-            </AddAttributeForm>
+            {isEditable() && (
+              <AddAttributeForm onSubmit={handleAddAttribute}>
+                <input type="text" name="name" placeholder="Название атрибута" required />
+                <input type="text" name="value" placeholder="Значение атрибута" required />
+                <button type="submit">Добавить</button>
+              </AddAttributeForm>
+            )}
           </div>
         </InfoSection>
       </ContentWrapper>

@@ -1,12 +1,17 @@
 // Report.js
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ratingsConfig } from "../utils/ratingConfig";
 import RatingCard from "./RatingCard";
-import axios from "axios";
+import useCategories from "../utils/useCategories";
 
-// Стилизованные компоненты
+const Container = styled.div`
+  padding: 0 2rem; /* Отступы по бокам */
+  max-width: 1200px; /* Максимальная ширина контейнера */
+  margin: 0 auto; /* Центрирование контейнера */
+`;
+
 const Title = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 1rem;
@@ -21,45 +26,77 @@ const Subtitle = styled.p`
 
 const RatingsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Адаптивная сетка */
-  gap: 1rem; /* Расстояние между элементами */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Минимальный размер 300px */
+  gap: 2rem; /* Увеличенные отступы между элементами */
 `;
 
-// Контейнер с отступами
-const Container = styled.div`
-  padding: 0 2rem; /* Отступы по бокам */
-  max-width: 1200px; /* Максимальная ширина контейнера */
-  margin: 0 auto; /* Центрирование контейнера */
+const CategorySelector = styled.select`
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
 `;
 
 const Report = () => {
+  const { categories, loading, error } = useCategories();
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [ratingsData, setRatingsData] = useState({});
 
-  // Функция для загрузки данных о рейтингах
-  const fetchRatings = async () => {
+  const fetchRatings = async (endpoint, key) => {
     try {
-      for (const rating of ratingsConfig) {
-        const response = await axios.get(rating.endpoint);
-        setRatingsData((prevData) => ({
-          ...prevData,
-          [rating.title]: response.data,
-        }));
-      }
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      setRatingsData((prevData) => ({
+        ...prevData,
+        [key]: data,
+      }));
     } catch (error) {
       console.error("Ошибка загрузки данных:", error);
     }
   };
 
+  const handleCategoryChange = (event) => {
+    const category = event.target.value;
+    setSelectedCategory(category);
+
+    const productRatingConfig = ratingsConfig.find((rating) => rating.title === "Рейтинг популярности товаров");
+    if (productRatingConfig) {
+      const endpoint = productRatingConfig.endpoint(category);
+      fetchRatings(endpoint, productRatingConfig.title);
+    }
+  };
+
   useEffect(() => {
-    fetchRatings();
+    ratingsConfig.forEach((rating) => {
+      if (typeof rating.endpoint === "string") {
+        fetchRatings(rating.endpoint, rating.title);
+      }
+    });
   }, []);
+
+  if (loading) {
+    return <p>Загрузка категорий...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <Container>
       <Title>Отчеты</Title>
       <Subtitle>Эта информация включает отчеты по заказам и поставкам.</Subtitle>
 
-      {/* Сетка для рейтингов */}
+      <CategorySelector onChange={handleCategoryChange}>
+        <option value="">Выберите категорию</option>
+        {categories.map((category) => (
+          <option key={category.id} value={category.name}>
+            {category.name}
+          </option>
+        ))}
+      </CategorySelector>
+
       <RatingsGrid>
         {ratingsConfig.map((rating, index) => (
           <RatingCard
