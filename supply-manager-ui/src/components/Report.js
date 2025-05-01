@@ -1,15 +1,14 @@
-// Report.js
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { ratingsConfig } from "../utils/ratingConfig";
 import RatingCard from "./RatingCard";
 import useCategories from "../utils/useCategories";
+import { DateContext } from "../DateContext";
 
 const Container = styled.div`
-  padding: 0 2rem; /* Отступы по бокам */
-  max-width: 1200px; /* Максимальная ширина контейнера */
-  margin: 0 auto; /* Центрирование контейнера */
+  padding: 0 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const Title = styled.h2`
@@ -26,8 +25,8 @@ const Subtitle = styled.p`
 
 const RatingsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Минимальный размер 300px */
-  gap: 2rem; /* Увеличенные отступы между элементами */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
 `;
 
 const CategorySelector = styled.select`
@@ -42,10 +41,16 @@ const Report = () => {
   const { categories, loading, error } = useCategories();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [ratingsData, setRatingsData] = useState({});
+  const { selectedDate } = useContext(DateContext); 
 
+  // Функция для загрузки данных рейтинга
   const fetchRatings = async (endpoint, key) => {
     try {
+      console.log(`Загрузка данных для '${key}' с endpoint: ${endpoint}`); // Логирование
       const response = await fetch(endpoint);
+      if (!response.ok) {
+        throw new Error(`Ошибка загрузки данных: ${response.statusText}`);
+      }
       const data = await response.json();
       setRatingsData((prevData) => ({
         ...prevData,
@@ -56,24 +61,42 @@ const Report = () => {
     }
   };
 
+  // Обработчик изменения категории
   const handleCategoryChange = (event) => {
     const category = event.target.value;
     setSelectedCategory(category);
 
-    const productRatingConfig = ratingsConfig.find((rating) => rating.title === "Рейтинг популярности товаров");
-    if (productRatingConfig) {
+    const productRatingConfig = ratingsConfig.find(
+      (rating) => rating.title === "Рейтинг популярности товаров"
+    );
+    if (productRatingConfig && typeof productRatingConfig.endpoint === "function") {
       const endpoint = productRatingConfig.endpoint(category);
-      fetchRatings(endpoint, productRatingConfig.title);
+      fetchRatings(`${endpoint}&date=${selectedDate.toISOString().split("T")[0]}`, productRatingConfig.title);
     }
   };
 
+  // Загрузка данных при изменении даты
   useEffect(() => {
-    ratingsConfig.forEach((rating) => {
-      if (typeof rating.endpoint === "string") {
-        fetchRatings(rating.endpoint, rating.title);
-      }
-    });
-  }, []);
+    const loadRatings = () => {
+      ratingsConfig.forEach((rating) => {
+        let endpoint;
+
+        if (typeof rating.endpoint === "string") {
+          // Если эндпоинт - строка, добавляем параметр даты
+          endpoint = `${rating.endpoint}?date=${selectedDate.toISOString().split("T")[0]}`;
+        } else if (selectedCategory && typeof rating.endpoint === "function") {
+          // Если эндпоинт - функция, вызываем её с категорией и добавляем дату
+          endpoint = `${rating.endpoint(selectedCategory)}&date=${selectedDate.toISOString().split("T")[0]}`;
+        }
+
+        if (endpoint) {
+          fetchRatings(endpoint, rating.title);
+        }
+      });
+    };
+
+    loadRatings();
+  }, [selectedDate, selectedCategory]);
 
   if (loading) {
     return <p>Загрузка категорий...</p>;
@@ -88,6 +111,7 @@ const Report = () => {
       <Title>Отчеты</Title>
       <Subtitle>Эта информация включает отчеты по заказам и поставкам.</Subtitle>
 
+      {/* Выбор категории */}
       <CategorySelector onChange={handleCategoryChange}>
         <option value="">Выберите категорию</option>
         {categories.map((category) => (
@@ -97,6 +121,7 @@ const Report = () => {
         ))}
       </CategorySelector>
 
+      {/* Отображение рейтингов */}
       <RatingsGrid>
         {ratingsConfig.map((rating, index) => (
           <RatingCard

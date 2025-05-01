@@ -12,6 +12,20 @@ databaseChangeLog:
   - include:
       - file: /db/changelog/view/2025-04-09-create_view_v_product_card.sql
   - include:
-      - file: /db/changelog/view/2025-04-23-create_view_v_supplier_rating.sql
+      - file: /db/changelog/view/2025-04-23-create_function_fv_supplier_rating.sql
   - include:
-      - file: /db/changelog/view/2025-04-25-create_view_fv_product_rating.sql
+      - file: /db/changelog/view/2025-04-25-create_function_fv_product_rating.sql
+  - include:
+      - file: /db/changelog/view/2025-04-30-create_function_fv_supplier_rating_category.sql
+  - include:
+      - file: /db/changelog/view/2025-04-30-create_function_fv_category_rating.sql
+  - include:
+      - file: /db/changelog/view/2025-04-30-create_function_fv_user_rating.sql
+  - include:
+      - file: /db/changelog/view/2025-04-30-create_function_fv_supplier_price_rating.sql
+  - include:
+      - file: /db/changelog/view/2025-04-30-create_function_fv_supplier_description_quality_rating.sql
+  - include:
+      - file: /db/changelog/view/2025-04-31-create_function_fv_supplier_newness_rating.sql
+  - include:
+      - file: /db/changelog/view/2025-04-31-create_function_fv_user_loyalty_rating.sql

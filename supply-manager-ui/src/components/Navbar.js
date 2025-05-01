@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { Link } from 'react-router-dom';
 import { FaHome, FaClipboardList, FaPeopleArrows, FaFileAlt, FaUser, FaUserPlus, FaBars, FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
+import { DateContext } from "../DateContext";
 
 const NavbarContainer = styled.nav`
   display: flex;
@@ -83,6 +86,7 @@ const Overlay = styled(({ isOpen, ...props }) => <div {...props} />)`
 `;
 
 const Navbar = () => {
+  const { selectedDate, handleDateChange } = useContext(DateContext);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -109,6 +113,16 @@ const Navbar = () => {
           <FaFileAlt /> Рейтинг
         </NavItem>
       </LeftNavItems>
+
+      <div className="date-picker">
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          dateFormat="dd.MM.yyyy"
+          placeholderText="Выберите дату"
+        />
+      </div>
+
       <RightNavItems>
         <NavItem to="/profile">
           <FaUser /> Личный профиль

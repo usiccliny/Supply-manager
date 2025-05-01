@@ -55,7 +55,7 @@ public class ProductService {
 
     // Метод для "удаления" товара (установка obsolete = true)
     public void markProductAsObsolete(Long id) {
-        Product product = productRepository.findById(id)
+        Product product = productRepository.findByIdAndObsoleteFalse(id)
                 .orElseThrow(() -> new RuntimeException("Товар с ID " + id + " не найден."));
 
         // Устанавливаем флаг obsolete = true

@@ -10,11 +10,11 @@ import lombok.Setter;
 @Table (name = "product", schema = "supply_manager")
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "version_id")
     private Long versionId;
 

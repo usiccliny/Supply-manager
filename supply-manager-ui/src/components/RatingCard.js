@@ -73,7 +73,7 @@ const RatingCard = ({ title, data }) => {
               return (
                 <StyledLink to={`/products/${item.productId}`} key={index}>
                   <RatingItem isLink>
-                    <strong>{item.totalRank}. {item.productName}</strong> (Рейтинг: {item.totalRating.toFixed(2)})
+                    <strong>{item.total_rank}. {item.product_name}</strong> (Рейтинг: {item.total_rating.toFixed(2)})
                   </RatingItem>
                 </StyledLink>
               );
@@ -81,7 +81,7 @@ const RatingCard = ({ title, data }) => {
               // Для других рейтингов просто выводим текст
               return (
                 <RatingItem key={index}>
-                  <strong>{item.totalRank}. {item.contactPerson}</strong> (Рейтинг: {item.totalRating.toFixed(2)})
+                  <strong>{item.total_rank}. {item.contact_person || item.username || item.category_name}</strong> (Рейтинг: {item.total_rating.toFixed(2)})
                 </RatingItem>
               );
             }
