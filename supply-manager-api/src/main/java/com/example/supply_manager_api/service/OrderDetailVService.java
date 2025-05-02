@@ -1,32 +1,19 @@
 package com.example.supply_manager_api.service;
 
-import com.example.supply_manager_api.model.OrderDetailV;
+import com.example.supply_manager_api.dto.OrderDetailDTO;
 import com.example.supply_manager_api.repository.OrderDetailVRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
 @Service
 public class OrderDetailVService {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderDetailVService.class);
-
     @Autowired
-    private OrderDetailVRepository orderDetailVRepository;
+    private OrderDetailVRepository orderDetailRepository;
 
-    public List<OrderDetailV> getOrderDetailsByOrderId(Long orderId) {
-        try {
-            logger.info("Fetching order details for order ID: {}", orderId);
-            List<OrderDetailV> details = orderDetailVRepository.findByOrderId(orderId);
-            logger.info("Found {} order details", details.size());
-            return details;
-        } catch (DataAccessException e) {
-            logger.error("Error fetching order details for order ID: {}", orderId, e);
-            throw new RuntimeException("Failed to retrieve order details", e);
-        }
+    public List<OrderDetailDTO> getOrderDetails(Long orderId, Integer role) {
+        return orderDetailRepository.findOrderDetails(orderId, role);
     }
 }

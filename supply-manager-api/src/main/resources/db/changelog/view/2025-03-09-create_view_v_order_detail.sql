@@ -1,49 +1,92 @@
 --liquibase formatted sql
---changeset eshardakov:create_view_v_order_detail runOnChange:true endDelimiter:/
---comment АРМ Менеджер по поставкам. Представление для детализации заказов.
+--changeset eshardakov:create_function_fv_order_detail runOnChange:true endDelimiter:/
+--comment АРМ Менеджер по поставкам. Параметризованное представление для детализации заказов с учетом роли пользователя.
 
-drop view if exists supply_manager.v_order_detail;
+drop function if exists supply_manager.fv_order_detail(int8, int8);
 
-create or replace view supply_manager.v_order_detail
-as 
+create or replace function supply_manager.fv_order_detail(
+    i_order_id int8, -- Идентификатор заказа
+    role int8        -- Роль пользователя (3 - покупатель, 4 - поставщик)
+)
+returns table (
+    order_detail_id int8,
+    order_id int8,
+    user_id int8,
+    supplier_id int8,
+    product_id int8,
+    product_name text,
+    contact_person text,
+    contact_data text,
+    price numeric,
+    quantity int8
+)
+as $$
 /*
- * version: 1.0
+ * version: 1.2
  * date: 2025-03-09
  * author: eshardakov
- * description: АРМ Менеджер по поставкам. Представление для детализации заказов.
- * version: 1.0, eshardakov, 2025-03-09 - Первоначальное создание.
+ * description: АРМ Менеджер по поставкам. Параметризованное представление для детализации заказов с учетом роли пользователя.
+ * version: 1.2, eshardakov, 2025-03-09 - Добавлена фильтрация по роли и пользователю.
  */
-    select od.id as order_detail_id,
-           od.order_id,
-           od.supplier_id,
-           od.product_id,
-           p.product_name,
-           s.contact_person,
-           s.phone_number,
-           p.price,
-           od.quantity
-      from supply_manager.order_detail od
-      join supply_manager.product p
-        on od.product_id = p.id
-       and not p.obsolete
-      join supply_manager.supplier s
-        on s.supplier_id = od.supplier_id
-       and not s.obsolete
-     where not od.obsolete;
+begin
+    return query
+        select 
+            od.id as order_detail_id,
+            od.order_id,
+            case 
+                when role = 4 then u.id -- Показываем ID пользователя для поставщика
+                else null
+            end as user_id,
+            case 
+                when role = 3 then s.supplier_id -- Показываем ID поставщика для покупателя
+                else null
+            end as supplier_id,
+            od.product_id,
+            p.product_name,
+            case
+                when role = 3 then s.contact_person -- Показываем контактное лицо поставщика для покупателя
+                when role = 4 then u.username       -- Показываем имя пользователя для поставщика
+                else null
+            end as contact_person,
+            case
+                when role = 3 then s.phone_number  -- Показываем телефон поставщика для покупателя
+                when role = 4 then u.email         -- Показываем email пользователя для поставщика
+                else null
+            end as contact_data,
+            p.price,
+            od.quantity
+        from 
+            supply_manager.order_detail od
+        join 
+            supply_manager.product p
+            on od.product_id = p.id
+            and not p.obsolete
+        join 
+            supply_manager.supplier s
+            on s.supplier_id = od.supplier_id
+            and not s.obsolete
+        left join 
+            supply_manager."order" o
+            on od.order_id = o.id
+            and not o.obsolete
+        left join 
+            supply_manager."user" u
+            on o.user_id = u.id
+            and not u.obsolete
+        where 
+            not od.obsolete
+            and o.id = i_order_id;
+end;
+$$ language plpgsql;
+/
 
 /* Пример использования
    
-   select * from supply_manager.v_order_detail
+   -- Для роли 3 (покупатель): информация о поставщике
+   select * from supply_manager.fv_order_detail(30, 3);
+
+   -- Для роли 4 (поставщик): информация о пользователе
+   select * from supply_manager.fv_order_detail(30, 4);
  */
 
-comment on view supply_manager.v_order_detail is 'Представление для детализации заказов';
-
-comment on column supply_manager.v_order_detail.order_detail_id is 'Уникальный идентификатор детали заказа';
-comment on column supply_manager.v_order_detail.order_id is 'Идентификатор заказа, к которому относится данная деталь';
-comment on column supply_manager.v_order_detail.supplier_id is 'Идентификатор поставщика, отвечающего за поставку';
-comment on column supply_manager.v_order_detail.product_id is 'Идентификатор продукта';
-comment on column supply_manager.v_order_detail.product_name is 'Наименование продукта';
-comment on column supply_manager.v_order_detail.contact_person is 'Контактное лицо поставщика';
-comment on column supply_manager.v_order_detail.phone_number is 'Номер телефона поставщика';
-comment on column supply_manager.v_order_detail.price is 'Цена продукта';
-comment on column supply_manager.v_order_detail.quantity is 'Количество заказанного продукта';
+comment on function supply_manager.fv_order_detail(int8, int8) is 'Параметризованное представление для детализации заказов с учетом роли пользователя';

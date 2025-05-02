@@ -1,8 +1,8 @@
 package com.example.supply_manager_api.controller;
 
+import com.example.supply_manager_api.dto.OrderDetailDTO;
 import com.example.supply_manager_api.dto.OrderDto;
 import com.example.supply_manager_api.dto.OrderRequestDTO;
-import com.example.supply_manager_api.model.OrderDetailV;
 import com.example.supply_manager_api.service.OrderDetailVService;
 import com.example.supply_manager_api.service.OrderServ;
 import com.example.supply_manager_api.service.OrderService;
@@ -25,13 +25,18 @@ public class OrderController {
     private OrderDetailVService orderDetailVService;
 
     @GetMapping()
-    public List<OrderDto> getOrdersByUserId(@RequestParam Long userId) {
-        return orderService.getOrdersByUserId(userId);
+    public List<OrderDto> getOrders(
+            @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false) String supplierName) {
+        return orderService.getOrders(userId, date, supplierName);
     }
 
     @GetMapping("/{orderId}")
-    public List<OrderDetailV> getOrderDetailByOrderId (@PathVariable Long orderId){
-        return orderDetailVService.getOrderDetailsByOrderId(orderId);
+    public List<OrderDetailDTO> getOrderDetails(
+            @PathVariable Long orderId,
+            @RequestParam Integer role) {
+        return orderDetailVService.getOrderDetails(orderId, role);
     }
 
     @PostMapping

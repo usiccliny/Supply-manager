@@ -9,6 +9,7 @@ import Profile from "./components/Profile";
 import Register from "./components/Register";
 import ProductCard from "./components/ProductCard";
 import { DateProvider } from "./DateContext"; // Импортируем провайдер
+import OrderCard from "./components/OrderCard";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/profile" element={<Profile loggedIn={loggedIn} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/products/:productId" element={<ProductCard />} />
+          <Route path="/orders/:orderId" element={<OrderCard />}/>
         </Routes>
       </Router>
     </DateProvider>

@@ -46,7 +46,6 @@ const Report = () => {
   // Функция для загрузки данных рейтинга
   const fetchRatings = async (endpoint, key) => {
     try {
-      console.log(`Загрузка данных для '${key}' с endpoint: ${endpoint}`); // Логирование
       const response = await fetch(endpoint);
       if (!response.ok) {
         throw new Error(`Ошибка загрузки данных: ${response.statusText}`);

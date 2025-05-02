@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import styled from 'styled-components';
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import CategoryOrderList from './CategoryOrderList';
 
-// Стили компонентов
 const OrderListContainer = styled.div`
   padding: 2rem;
   display: flex;
@@ -192,16 +192,27 @@ const OrderListPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [isWidgetVisible, setIsWidgetVisible] = useState(true); // Состояние видимости виджета
+  const [isWidgetVisible, setIsWidgetVisible] = useState(true);
   const userRole = parseInt(localStorage.getItem('userRole'), 10);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const supplierName = localStorage.getItem('username');
+  const navigate = useNavigate();
+
+  const handleRowClick = (orderId) => {
+    navigate(`/orders/${orderId}`);
+  };
 
   const fetchOrders = async () => {
     try {
       const userId = localStorage.getItem('userId');
       if (!userId) return;
-
-      const response = await axios.get(`http://localhost:8080/api/orders?userId=${userId}`);
+      let response;
+      if (userRole == 3) {
+      response = await axios.get(`http://localhost:8080/api/orders?userId=${userId}`);
+      }
+      else{
+        response = await axios.get(`http://localhost:8080/api/orders?supplierName=${supplierName}`)
+      }
       setOrders(response.data);
       setFilteredOrders(response.data);
     } catch (err) {
@@ -211,7 +222,6 @@ const OrderListPage = () => {
 
   useEffect(() => {fetchOrders();}, []);
 
-  // Расчет статистики
   const calculateStatistics = () => {
     const statusCounts = {
       "Ожидает оплаты": 0,
@@ -246,7 +256,7 @@ const OrderListPage = () => {
   // Фильтрация заказов
   const handleFilterChange = (status) => {
     setActiveFilter(status);
-    setCurrentPage(1); // Сброс страницы при изменении фильтра
+    setCurrentPage(1);
 
     if (status === 'all') {
       setFilteredOrders(orders);
@@ -256,7 +266,6 @@ const OrderListPage = () => {
     }
   };
 
-  // Логика пагинации
   const indexOfLastOrder = currentPage * itemsPerPage;
   const indexOfFirstOrder = indexOfLastOrder - itemsPerPage;
   const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
@@ -389,7 +398,7 @@ const OrderListPage = () => {
           </thead>
           <tbody>
             {currentOrders.map((order, idx) => (
-              <tr key={idx}>
+              <tr key={order.orderId} onClick={() => handleRowClick(order.orderId)}>
                 <td>{order.orderId}</td>
                 <td>{order.orderStatus}</td>
                 <td>{new Date(order.orderDate).toLocaleString()}</td>

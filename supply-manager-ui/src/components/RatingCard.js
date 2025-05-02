@@ -71,7 +71,7 @@ const RatingCard = ({ title, data }) => {
             if (isPopularProductsRating) {
               // Для "Рейтинг популярности товаров" создаем ссылки
               return (
-                <StyledLink to={`/products/${item.productId}`} key={index}>
+                <StyledLink to={`/products/${item.product_id}`} key={index}>
                   <RatingItem isLink>
                     <strong>{item.total_rank}. {item.product_name}</strong> (Рейтинг: {item.total_rating.toFixed(2)})
                   </RatingItem>

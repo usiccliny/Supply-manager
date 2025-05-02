@@ -17,8 +17,8 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<OrderDto> getOrdersByUserId(Long userId) {
-        logger.info("Fetching orders for user ID: {}", userId);
-        return orderRepository.findOrdersByUserId(userId);
+    public List<OrderDto> getOrders(Long userId, String date, String supplierName) {
+        logger.info("Fetching orders for user ID: {}, date: {}, supplier ID: {}", userId, date, supplierName);
+        return orderRepository.findOrders(userId, date, supplierName);
     }
 }
