@@ -10,7 +10,6 @@ import com.example.supply_manager_api.service.ProductAttributeService;
 import com.example.supply_manager_api.service.ProductCardService;
 import com.example.supply_manager_api.service.ProductService;
 import com.example.supply_manager_api.service.ViewProductService;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

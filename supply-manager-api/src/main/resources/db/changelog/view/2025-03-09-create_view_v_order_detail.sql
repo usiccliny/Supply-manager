@@ -30,6 +30,15 @@ as $$
  */
 begin
     return query
+        with supplier_c as (
+             select s.supplier_id,
+                    u.id
+               from supply_manager.user u
+               join supply_manager.supplier s
+                 on s.email = u.email
+              where not u.obsolete
+                and not s.obsolete
+        )
         select 
             od.id as order_detail_id,
             od.order_id,
@@ -38,7 +47,7 @@ begin
                 else null
             end as user_id,
             case 
-                when role = 3 then s.supplier_id -- Показываем ID поставщика для покупателя
+                when role = 3 then sc.id -- Показываем ID поставщика для покупателя
                 else null
             end as supplier_id,
             od.product_id,
@@ -65,6 +74,9 @@ begin
             supply_manager.supplier s
             on s.supplier_id = od.supplier_id
             and not s.obsolete
+        join 
+            supplier_c sc
+            on sc.supplier_id = s.supplier_id
         left join 
             supply_manager."order" o
             on od.order_id = o.id

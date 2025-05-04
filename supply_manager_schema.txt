@@ -1,0 +1,254 @@
+CREATE TABLE supply_manager."attribute" (
+	id bigserial NOT NULL,
+	"name" text NOT NULL,
+	"type" text NOT NULL,
+	unit text NULL,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	CONSTRAINT pk_attribute PRIMARY KEY (id)
+);
+
+CREATE TABLE supply_manager.company (
+	id int8 NOT NULL,
+	version_id int8 NOT NULL,
+	"name" text NULL,
+	email text NULL,
+	address text NULL,
+	website text NULL,
+	lifetime int4 NULL,
+	rating numeric NULL,
+	company_code text NOT NULL,
+	logotype text NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_company PRIMARY KEY (id),
+	CONSTRAINT uk_company UNIQUE (id, version_id),
+	CONSTRAINT "uk_company$companyname" UNIQUE (company_code)
+);
+
+CREATE TABLE supply_manager.sp_category_product (
+	id int8 DEFAULT nextval('supply_manager.sp_role_id_seq'::regclass) NOT NULL,
+	"name" text NOT NULL,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	parent_id int8 NULL,
+	nesting_level int8 NULL,
+	CONSTRAINT pk_sp_category_product PRIMARY KEY (id),
+	CONSTRAINT uk_sp_category_product UNIQUE (name)
+);
+
+CREATE TABLE supply_manager.sp_order_status (
+	id bigserial NOT NULL,
+	"name" text NOT NULL,
+	CONSTRAINT pk_sp_order_status PRIMARY KEY (id)
+);
+
+CREATE TABLE supply_manager.sp_payment_method (
+	id bigserial NOT NULL,
+	"name" text NOT NULL,
+	CONSTRAINT pk_sp_payment_method PRIMARY KEY (id)
+);
+
+CREATE TABLE supply_manager.sp_post (
+	id bigserial NOT NULL,
+	"name" text NOT NULL,
+	short_name text NULL,
+	CONSTRAINT pk_sp_post PRIMARY KEY (id),
+	CONSTRAINT uk_sp_post UNIQUE (name)
+);
+
+CREATE TABLE supply_manager.sp_product_status (
+	id int8 DEFAULT nextval('supply_manager.sp_role_id_seq'::regclass) NOT NULL,
+	"name" text NOT NULL,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	CONSTRAINT pk_sp_product_status PRIMARY KEY (id),
+	CONSTRAINT uk_sp_product_status UNIQUE (name)
+);
+
+
+CREATE TABLE supply_manager.sp_role (
+	id bigserial NOT NULL,
+	"name" text NOT NULL,
+	CONSTRAINT pk_sp_role PRIMARY KEY (id)
+);
+
+CREATE TABLE supply_manager.supplier (
+	supplier_id int8 NOT NULL,
+	supplier_version_id int8 NOT NULL,
+	contact_person text NOT NULL,
+	phone_number text NULL,
+	email text NULL,
+	address text NULL,
+	company_id int8 NOT NULL,
+	company_version_id int8 NOT NULL,
+	post_id int8 NOT NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_supplier PRIMARY KEY (supplier_version_id),
+	CONSTRAINT uk_supplier UNIQUE (supplier_id, supplier_version_id),
+	CONSTRAINT fk_supplier_company FOREIGN KEY (company_id,company_version_id) REFERENCES supply_manager.company(id,version_id),
+	CONSTRAINT fk_supplier_post FOREIGN KEY (post_id) REFERENCES supply_manager.sp_post(id)
+);
+
+CREATE TABLE supply_manager."user" (
+	id int8 NOT NULL,
+	version_id int8 NULL,
+	username text NULL,
+	"password" text NULL,
+	email text NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	role_id int4 DEFAULT 3 NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_user PRIMARY KEY (id),
+	CONSTRAINT uk_user UNIQUE (id, version_id),
+	CONSTRAINT "uk_user$email" UNIQUE (email),
+	CONSTRAINT "uk_user$username" UNIQUE (username),
+	CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES supply_manager.sp_role(id)
+);
+
+CREATE TABLE supply_manager."order" (
+	id int8 NOT NULL,
+	version_id int8 NOT NULL,
+	user_id int8 NOT NULL,
+	user_version_id int8 NOT NULL,
+	order_date timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	order_status_id int8 DEFAULT 1 NULL,
+	total_amount numeric NULL,
+	shipping_address text NULL,
+	billing_address text NULL,
+	payment_method_id int8 NULL,
+	tracking_number text NOT NULL,
+	date_created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	date_modified timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	notes text NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_order PRIMARY KEY (version_id),
+	CONSTRAINT uk_order UNIQUE (id, version_id),
+	CONSTRAINT fk_order_payment_method FOREIGN KEY (payment_method_id) REFERENCES supply_manager.sp_payment_method(id),
+	CONSTRAINT fk_order_status FOREIGN KEY (order_status_id) REFERENCES supply_manager.sp_order_status(id),
+	CONSTRAINT fk_order_user FOREIGN KEY (user_id,user_version_id) REFERENCES supply_manager."user"(id,version_id)
+);
+
+CREATE TABLE supply_manager.product (
+	id int8 NOT NULL,
+	version_id int8 NOT NULL,
+	supplier_id int8 NOT NULL,
+	supplier_version_id int8 NOT NULL,
+	category_product_id int8 NOT NULL,
+	status_id int8 NULL,
+	product_name text NULL,
+	price numeric NULL,
+	quantity int4 NULL,
+	obsolete bool DEFAULT false NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	photo text NULL,
+	video text NULL,
+	rating numeric NULL,
+	CONSTRAINT pk_product PRIMARY KEY (version_id),
+	CONSTRAINT uk_product UNIQUE (id, version_id),
+	CONSTRAINT fk_product_sp_category_product FOREIGN KEY (category_product_id) REFERENCES supply_manager.sp_category_product(id),
+	CONSTRAINT fk_product_sp_product_status FOREIGN KEY (status_id) REFERENCES supply_manager.sp_product_status(id),
+	CONSTRAINT fk_product_supplier FOREIGN KEY (supplier_id,supplier_version_id) REFERENCES supply_manager.supplier(supplier_id,supplier_version_id)
+);
+
+CREATE TABLE supply_manager.product_attribute (
+	id int8 NOT NULL,
+	version_id int8 NOT NULL,
+	product_id int8 NOT NULL,
+	product_version_id int8 NOT NULL,
+	attribute_id int8 NOT NULL,
+	value text NOT NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_product_attribute PRIMARY KEY (version_id),
+	CONSTRAINT uk_product_attribute UNIQUE (id, version_id),
+	CONSTRAINT fk_product_attribute_attribute FOREIGN KEY (id) REFERENCES supply_manager."attribute"(id),
+	CONSTRAINT fk_product_attribute_product FOREIGN KEY (product_id,product_version_id) REFERENCES supply_manager.product(id,version_id)
+);
+
+CREATE TABLE supply_manager.review (
+	id int8 NOT NULL,
+	version_id int8 NOT NULL,
+	author_id int8 NULL,
+	author_version_id int8 NULL,
+	target_id int8 NULL,
+	target_version_id int8 NULL,
+	order_id int8 NULL,
+	order_version_id int8 NULL,
+	rating int4 NOT NULL,
+	"comment" text NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_review PRIMARY KEY (version_id),
+	CONSTRAINT review_rating_check CHECK (((rating >= 1) AND (rating <= 5))),
+	CONSTRAINT uk_review UNIQUE (id, version_id),
+	CONSTRAINT fk_review_author FOREIGN KEY (author_id,author_version_id) REFERENCES supply_manager."user"(id,version_id),
+	CONSTRAINT fk_review_order FOREIGN KEY (order_id,order_version_id) REFERENCES supply_manager."order"(id,version_id),
+	CONSTRAINT fk_review_target FOREIGN KEY (target_id,target_version_id) REFERENCES supply_manager."user"(id,version_id)
+);
+
+CREATE TABLE supply_manager.review_reaction (
+	id int8 NOT NULL,
+	version_id int8 NOT NULL,
+	review_id int8 NULL,
+	review_version_id int8 NULL,
+	user_id int8 NULL,
+	user_version_id int8 NULL,
+	reaction_type text NOT NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_review_reaction PRIMARY KEY (version_id),
+	CONSTRAINT review_reaction_reaction_type_check CHECK ((reaction_type = ANY (ARRAY['like'::text, 'dislike'::text]))),
+	CONSTRAINT uk_review_reaction UNIQUE (id, version_id, review_id, user_id),
+	CONSTRAINT fk_review_reaction_review FOREIGN KEY (review_id,review_version_id) REFERENCES supply_manager.review(id,version_id),
+	CONSTRAINT fk_review_reaction_user FOREIGN KEY (user_id,user_version_id) REFERENCES supply_manager."user"(id,version_id)
+);
+
+CREATE TABLE supply_manager.review_reply (
+	id int8 NOT NULL,
+	version_id int8 NOT NULL,
+	review_id int8 NULL,
+	review_version_id int8 NULL,
+	author_id int8 NULL,
+	author_version_id int8 NULL,
+	reply_text text NOT NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_review_reply PRIMARY KEY (version_id),
+	CONSTRAINT uk_review_reply UNIQUE (id, version_id),
+	CONSTRAINT fk_review_reply_author FOREIGN KEY (author_id,author_version_id) REFERENCES supply_manager."user"(id,version_id),
+	CONSTRAINT fk_review_reply_review FOREIGN KEY (review_id,review_version_id) REFERENCES supply_manager.review(id,version_id)
+);
+
+CREATE TABLE supply_manager.order_detail (
+	id int8 NOT NULL,
+	version_id int8 NOT NULL,
+	order_id int8 NOT NULL,
+	order_version_id int8 NOT NULL,
+	supplier_id int8 NOT NULL,
+	supplier_version_id int8 NOT NULL,
+	product_id int8 NOT NULL,
+	product_version_id int8 NOT NULL,
+	quantity int8 NOT NULL,
+	date_created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	date_modified timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	obsolete bool DEFAULT false NOT NULL,
+	begin_ts timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	end_ts timestamp DEFAULT supply_manager.f_max_timestamp() NOT NULL,
+	CONSTRAINT pk_order_detail PRIMARY KEY (version_id),
+	CONSTRAINT uk_order_detail UNIQUE (id, version_id),
+	CONSTRAINT fk_order_detail_order FOREIGN KEY (order_id,order_version_id) REFERENCES supply_manager."order"(id,version_id),
+	CONSTRAINT fk_order_detail_product FOREIGN KEY (product_id,product_version_id) REFERENCES supply_manager.product(id,version_id),
+	CONSTRAINT fk_order_detail_supplier FOREIGN KEY (supplier_id,supplier_version_id) REFERENCES supply_manager.supplier(supplier_id,supplier_version_id)
+);

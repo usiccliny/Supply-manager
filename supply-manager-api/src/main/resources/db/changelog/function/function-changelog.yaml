@@ -13,3 +13,9 @@ databaseChangeLog:
       - file: /db/changelog/function/2025-02-26-create_function_f_order_detail_id_insert.sql
   - include:
       - file: /db/changelog/function/2025-04-08-create_function_f_product_atribute_id_insert.sql
+  - include:
+      - file: /db/changelog/function/2025-05-02-create_function_f_review_insert.sql
+  - include:
+      - file: /db/changelog/function/2025-05-02-create_function_f_review_reaction_insert.sql
+  - include:
+      - file: /db/changelog/function/2025-05-02-create_function_f_review_reply_insert.sql

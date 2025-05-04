@@ -27,3 +27,9 @@ databaseChangeLog:
       - file: /db/changelog/table/2025-02-26-create_table_order_detail.sql
   - include:
       - file: /db/changelog/table/2025-04-08-create_table_product_attribute.sql
+  - include:
+      - file: /db/changelog/table/2025-05-02-create_table_review.sql
+  - include:
+      - file: /db/changelog/table/2025-05-02-create_table_review_reply.sql
+  - include:
+      - file: /db/changelog/table/2025-05-02-create_table_review_reaction.sql
