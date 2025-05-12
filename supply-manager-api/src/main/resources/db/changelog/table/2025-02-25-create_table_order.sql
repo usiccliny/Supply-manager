@@ -21,7 +21,7 @@ create table if not exists supply_manager.order(
   user_id int8 not null,
   user_version_id int8 not null,
   order_date timestamp not null default current_timestamp,
-  order_status_id int8,
+  status_id int8,
   total_amount numeric,
   shipping_address text,
   billing_address text,
@@ -37,9 +37,9 @@ create table if not exists supply_manager.order(
   constraint uk_order unique (id, version_id),
   constraint fk_order_user foreign key (user_id, user_version_id) references
       supply_manager.user (id, version_id),
-  constraint fk_order_user foreign key (status_id) references
+  constraint fk_order_sp_order_status foreign key (status_id) references
       supply_manager.sp_order_status (id),  
-  constraint fk_order_user foreign key (payment_method_id) references
+  constraint fk_order_sp_payment_method foreign key (payment_method_id) references
       supply_manager.sp_payment_method (id)      
 );
 comment on table supply_manager.order is 'Таблица Заказы.';
@@ -49,7 +49,7 @@ comment on column supply_manager.order.version_id is 'Идентификатор
 comment on column supply_manager.order.user_id is 'Идентификатор пользователя';
 comment on column supply_manager.order.user_version_id is 'Идентификатор версии пользователя';
 comment on column supply_manager.order.order_date is 'Дата заказа';
-comment on column supply_manager.order.order_status_id is 'Статус заказа';
+comment on column supply_manager.order.status_id is 'Статус заказа';
 comment on column supply_manager.order.total_amount is 'Общая сумма заказа';
 comment on column supply_manager.order.shipping_address is 'Адрес доставки';
 comment on column supply_manager.order.billing_address is 'Платежный адрес';

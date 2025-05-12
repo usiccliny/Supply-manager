@@ -31,7 +31,7 @@ create table if not exists supply_manager.company(
   end_ts timestamp not null default supply_manager.f_max_timestamp(),
   constraint pk_company primary key (id),
   constraint uk_company unique (id, version_id),
-  constraint uk_company$companyname unique (compyany_code)
+  constraint uk_company$companyname unique (company_code)
 );
 comment on table supply_manager.company is 'Таблица Поставщики.';
 

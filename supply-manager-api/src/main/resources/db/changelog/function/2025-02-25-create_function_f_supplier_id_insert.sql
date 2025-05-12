@@ -14,13 +14,13 @@ returns trigger as $$
 declare
   p_date date;
   p_new_id int8;
-  p_version_id supply_manager.supplier.supplier_version_id%type;
+  p_version_id int8;
   p_contact_person supply_manager.supplier.contact_person%type;
   p_phone_number supply_manager.supplier.phone_number%type;
   p_email supply_manager.supplier.email%type;
   p_address supply_manager.supplier.address%type;
   p_company_id supply_manager.supplier.company_id%type;
-  p_company_version_id supply_manager.supplier.company_version_id%type;
+  p_company_version_id supply_manager.supplier.company_vers_id%type;
   p_post_id supply_manager.supplier.post_id%type;
   p_obsolete bool;
 begin
